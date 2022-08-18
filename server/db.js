@@ -57,18 +57,43 @@ function getUserByEmail(email) {
 
 //////////////////////////// RESET PASSWORD
 
-function resetPassword(email, password) {
-    return getUserByEmail(email).then((foundUser) => {
-        if (!foundUser) {
-            console.log("email not found!");
-            return null;
-        }
-    });
-}
+// const cryptoRandomString = require("crypto-random-string");
+// const secretCode = cryptoRandomString({
+//     length: 6,
+// });
 
-function compareMail() {}
+// function createCode(email, secretCode) {
+//     return getUserByEmail(email).then((foundUser) => {
+//         if (!foundUser) {
+//             console.log("email not found!");
+//             return null;
+//         }
+//         return something.then((email, code, created_at) => {
+//             return db
+//                 .query(
+//                     `INSERT INTO reset_codes (email, code, created_at) VALUES ($1, $2, $3) RETURNING *`,
+//                     [email, code, created_at]
+//                 )
+//                 .then((result) => result.rows[0]);
+//         });
+//     });
+// }
 
-function updatePassword() {}
+// function checkCodeTable() {
+//     return db.query(`SELECT * FROM reset_codes
+// WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`);
+// }
+
+// function updatePassword() {
+//     return hash(password).then((password_hash) => {
+//         return db
+//             .query(
+//                 `INSERT INTO users (password_hash) VALUES ($1) RETURNING *`,
+//                 [password_hash]
+//             )
+//             .then((result) => result.rows[0]);
+//     });
+// }
 
 ////////////////////////////
 
@@ -76,7 +101,8 @@ module.exports = {
     createUser,
     getUserById,
     login,
-    resetPassword,
-    compareMail,
-    updatePassword,
+    getUserByEmail,
+    // createCode,
+    // checkCodeTable,
+    // updatePassword,
 };

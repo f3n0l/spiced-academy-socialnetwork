@@ -5,7 +5,15 @@ const path = require("path");
 const { SESSION_SECRET } = require("./secrets.json");
 const cookieSession = require("cookie-session");
 
-const { getUserById, createUser, login } = require("./db");
+const {
+    getUserById,
+    createUser,
+    login,
+    createCode,
+    checkCodeTable,
+    updatePassword,
+    getUserByEmail,
+} = require("./db");
 
 ////////////////////////// MIDDLEWARE
 
@@ -77,14 +85,28 @@ app.get("/logout", (request, response) => {
 
 //////////////////////////// RESET PASSWORD
 
-app.post("/password/reset/start", (request, response) => {
-    //check email //if + create code + send to email +++ log code in console
-});
+// app.post("/password/reset/start", (request, response) => {
+//     createCode(request.body)
+//         .then((foundUser) => {
+//             if (!foundUser) {
+//                 response.status(401).json({ error: "Email not found!" });
+//                 return;
+//             }
+//         })
+//         .catch((error) => {
+//             console.log("POST /reset/start", error);
+//             response.status(500).json({ error: "something went wrong" });
+//         });
+// });
 
-app.post("/password/reset/verify", (request, response) => {
-    //getuserbyemail  //check if code exists // if valid + timer not expired  -> reset password
-    //error + message ok
-});
+// check email //if + create code + send to email +++ log code in console
+
+// app.post("/password/reset/verify", (request, response) => {
+//     checkCodeTable();
+//     updatePassword();
+//     getuserbyemail  //check if code exists // if valid + timer not expired  -> reset password
+//     error + message ok
+// });
 
 //////////////////////////
 

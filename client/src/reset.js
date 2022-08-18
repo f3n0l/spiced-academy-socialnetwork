@@ -45,7 +45,7 @@ export default class ResetPassword extends Component {
             return <div>Success</div>;
         }
     }
-
+    ///fetch
     handleEmailSubmit(event) {
         event.preventDefault();
         console.log(this.state);
@@ -55,6 +55,19 @@ export default class ResetPassword extends Component {
     handleCodeSubmit(event) {
         event.preventDefault();
         this.setState({ step: 3 });
+
+        /*         fetch("/password/reset/start", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    this.setState({ error: "code/error faulty" });
+                    return;
+                }
+            }); */ //another for code
     }
 
     render() {
@@ -62,6 +75,7 @@ export default class ResetPassword extends Component {
             <div>
                 <h2> Reset Password</h2>
                 {this.checkStep()}
+                {this.state.error && <p>{this.state.error}</p>}
             </div>
         );
     }
