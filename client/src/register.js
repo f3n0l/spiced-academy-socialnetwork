@@ -10,7 +10,7 @@ export default class RegisterForm extends Component {
     }
     onFormSubmit(event) {
         event.preventDefault();
-
+        console.log("hi");
         const formData = {
             first_name: event.target.first_name.value,
             last_name: event.target.last_name.value,
@@ -21,12 +21,12 @@ export default class RegisterForm extends Component {
         fetch("/api/users", {
             method: "POST",
             body: JSON.stringify(formData),
-            headers: {},
+            headers: { "Content-Type": "application/json" },
         })
-            .then((response) => response.json)
+            .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
-                    console.log("/post", data.error);
+                    this.setState({ error: "reg post error" });
                     return;
                 } else {
                     window.location.href = "/";

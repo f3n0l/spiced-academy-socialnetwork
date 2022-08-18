@@ -42,7 +42,7 @@ app.post("/api/users", (request, response) => {
         })
         .catch((error) => {
             console.log("post /api/users", error);
-            if (error.constraint === "users_email_key") {
+            if (error.constraint === "email") {
                 response.status(400).json({ error: "E-Mail already used" });
                 return;
             }
