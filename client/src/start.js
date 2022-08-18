@@ -12,5 +12,11 @@ fetch("/api/users/me")
     });
 
 function HelloWorld() {
-    return <div>Hello, World!</div>;
+    return (
+        <div>
+            <img src="./banner.PNG"></img>
+            <p>Hello, World!</p>
+            <a href="/logout">Log Out</a>
+        </div>
+    );
 }

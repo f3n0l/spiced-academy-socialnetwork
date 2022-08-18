@@ -10,6 +10,8 @@ const db = spicedPg(
 const hash = (password) =>
     bcrypt.genSalt().then((salt) => bcrypt.hash(password, salt));
 
+/////////////////////// REGISTER
+
 function createUser({ first_name, last_name, email, password }) {
     return hash(password).then((password_hash) => {
         return db
@@ -27,4 +29,54 @@ function getUserById(id) {
         .then((result) => result.rows[0]);
 }
 
-module.exports = { createUser, getUserById };
+/////////////////////// LOGIN
+
+function login({ email, password }) {
+    console.log(email, password);
+    return getUserByEmail(email).then((foundUser) => {
+        if (!foundUser) {
+            console.log("Email not found");
+            return null;
+        }
+        return bcrypt
+            .compare(password, foundUser.password_hash)
+            .then((match) => {
+                if (match) {
+                    return foundUser;
+                }
+                return null;
+            });
+    });
+}
+
+function getUserByEmail(email) {
+    return db
+        .query("SELECT * FROM users WHERE email = $1", [email])
+        .then((result) => result.rows[0]);
+}
+
+//////////////////////////// RESET PASSWORD
+
+function resetPassword(email, password) {
+    return getUserByEmail(email).then((foundUser) => {
+        if (!foundUser) {
+            console.log("email not found!");
+            return null;
+        }
+    });
+}
+
+function compareMail() {}
+
+function updatePassword() {}
+
+////////////////////////////
+
+module.exports = {
+    createUser,
+    getUserById,
+    login,
+    resetPassword,
+    compareMail,
+    updatePassword,
+};

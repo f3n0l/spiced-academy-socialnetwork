@@ -5,9 +5,9 @@ const path = require("path");
 const { SESSION_SECRET } = require("./secrets.json");
 const cookieSession = require("cookie-session");
 
-const { getUserById, createUser } = require("./db");
+const { getUserById, createUser, login } = require("./db");
 
-//////////////////////////
+////////////////////////// MIDDLEWARE
 
 app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -20,7 +20,7 @@ app.use(
     })
 );
 
-//////////////////////////
+////////////////////////// REGISTER
 
 app.get("/api/users/me", (request, response) => {
     if (!request.session.user_id) {
@@ -48,6 +48,42 @@ app.post("/api/users", (request, response) => {
             }
             response.status(500).json({ error: "Something went wrong" });
         });
+});
+
+////////////////////////// LOGIN
+
+app.post("/api/login", (request, response) => {
+    console.log("login", request.body);
+    login(request.body)
+        .then((foundUser) => {
+            if (!foundUser) {
+                response.status(401).json({ error: "Wrong credentials!" });
+                return;
+            }
+            request.session.user_id = foundUser.id;
+
+            response.json(foundUser);
+        })
+        .catch((error) => {
+            console.log("POST /API/LOGIN", error);
+            response.status(500).json({ error: "something went wrong" });
+        });
+});
+
+app.get("/logout", (request, response) => {
+    request.session = null;
+    response.json({ message: "ok" });
+});
+
+//////////////////////////// RESET PASSWORD
+
+app.post("/password/reset/start", (request, response) => {
+    //check email //if + create code + send to email +++ log code in console
+});
+
+app.post("/password/reset/verify", (request, response) => {
+    //getuserbyemail  //check if code exists // if valid + timer not expired  -> reset password
+    //error + message ok
 });
 
 //////////////////////////

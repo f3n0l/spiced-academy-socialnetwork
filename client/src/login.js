@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class RegisterForm extends Component {
+export default class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,15 +11,12 @@ export default class RegisterForm extends Component {
     }
     onFormSubmit(event) {
         event.preventDefault();
-        console.log("hi");
         const formData = {
-            first_name: event.target.first_name.value,
-            last_name: event.target.last_name.value,
             email: event.target.email.value,
             password: event.target.password.value,
         };
 
-        fetch("/api/users", {
+        fetch("/api/login", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" },
@@ -27,7 +24,7 @@ export default class RegisterForm extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
-                    this.setState({ error: "email already taken" });
+                    this.setState({ error: "credentials' faulty" });
                     return;
                 } else {
                     window.location.href = "/";
@@ -38,18 +35,6 @@ export default class RegisterForm extends Component {
         return (
             <div>
                 <form onSubmit={this.onFormSubmit}>
-                    <input
-                        name="first_name"
-                        type="first_name"
-                        placeholder="First Name"
-                        required
-                    />
-                    <input
-                        name="last_name"
-                        type="last_name"
-                        placeholder="First Name"
-                        required
-                    />
                     <input
                         name="email"
                         type="email"
@@ -63,9 +48,9 @@ export default class RegisterForm extends Component {
                         placeholder="Password"
                     />
                     {this.state.error && <p>{this.state.error}</p>}
-                    <button>Register</button>
+                    <button>Login</button>
                 </form>
-                <Link to="/login">Click here to Log in!</Link>
+                <Link to="/">Click here to Register!</Link>
             </div>
         );
     }
