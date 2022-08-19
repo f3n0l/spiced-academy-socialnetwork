@@ -5,14 +5,18 @@ const path = require("path");
 const { SESSION_SECRET } = require("./secrets.json");
 const cookieSession = require("cookie-session");
 
+const { Bucket, s3Upload } = require("./s3");
+const { uploader } = require("./uploader");
+/* const helmet = require("helmet"); */
+
 const {
     getUserById,
     createUser,
     login,
     createCode,
-    checkCodeTable,
     updatePassword,
-    getUserByEmail,
+    getCodeByEmailAndCode,
+    updateUserProfilePicture,
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -27,7 +31,7 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
-
+/* app.use(helmet()); */
 ////////////////////////// REGISTER
 
 app.get("/api/users/me", (request, response) => {
@@ -78,35 +82,66 @@ app.post("/api/login", (request, response) => {
         });
 });
 
-app.get("/logout", (request, response) => {
+app.post("/logout", (request, response) => {
     request.session = null;
     response.json({ message: "ok" });
 });
 
 //////////////////////////// RESET PASSWORD
 
-// app.post("/password/reset/start", (request, response) => {
-//     createCode(request.body)
-//         .then((foundUser) => {
-//             if (!foundUser) {
-//                 response.status(401).json({ error: "Email not found!" });
-//                 return;
-//             }
-//         })
-//         .catch((error) => {
-//             console.log("POST /reset/start", error);
-//             response.status(500).json({ error: "something went wrong" });
-//         });
-// });
+app.post("/password/reset/start", (request, response) => {
+    createCode(request.body)
+        .then((foundUser) => {
+            if (!foundUser) {
+                response.status(401).json({ error: "Email not found!" });
+                return;
+            }
+            response.json({ message: "ok" });
+        })
+        .catch((error) => {
+            console.log("POST /reset/start", error);
+            response.status(500).json({ error: "something went wrong" });
+        });
+});
 
-// check email //if + create code + send to email +++ log code in console
+app.post("/password/reset/verify", (request, response) => {
+    getCodeByEmailAndCode(request.body) //???
+        .then((foundCode) => {
+            if (!foundCode) {
+                response.status(401).json({ error: "Email/Code incorrect!" });
+                return;
+            }
+            updatePassword(request.body); //crap ////
+        })
+        .catch((error) => {
+            console.log("POST /reset/verify", error);
+            response.status(500).json({ error: "something went wrong" });
+        });
+});
 
-// app.post("/password/reset/verify", (request, response) => {
-//     checkCodeTable();
-//     updatePassword();
-//     getuserbyemail  //check if code exists // if valid + timer not expired  -> reset password
-//     error + message ok
-// });
+////////////////////////// UPDATE PROFILE PICTURE
+
+app.post(
+    "/api/users/profile",
+    uploader.single("file"),
+    s3Upload,
+    (request, response) => {
+        const url = `https://s3.amazonaws.com/${Bucket}/${request.file.filename}`;
+        console.log("POST /upload", url);
+
+        updateUserProfilePicture({
+            user_id: request.session.user_id,
+            profile_picture_url: url,
+        })
+            .then((user) => {
+                response.json(user);
+            })
+            .catch((error) => {
+                console.log("POST /upload", error);
+                response.status(500).json({ message: "error uploading image" });
+            });
+    }
+);
 
 //////////////////////////
 

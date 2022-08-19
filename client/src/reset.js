@@ -25,7 +25,7 @@ export default class ResetPassword extends Component {
                 <div>
                     Send Reset Code
                     <form onSubmit={this.handleEmailSubmit}>
-                        <input type="email" placeholder="Email" />
+                        <input type="email" name="email" placeholder="Email" />
                         <button>Submit</button>
                     </form>
                 </div>
@@ -35,8 +35,12 @@ export default class ResetPassword extends Component {
                 <div>
                     Enter Reset Code
                     <form onSubmit={this.handleCodeSubmit}>
-                        <input type="text" placeholder="Code" />
-                        <input type="password" placeholder="Password" />
+                        <input type="text" name="code" placeholder="Code" />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                        />
                         <button>Submit</button>
                     </form>
                 </div>
@@ -49,16 +53,10 @@ export default class ResetPassword extends Component {
     handleEmailSubmit(event) {
         event.preventDefault();
         console.log(this.state);
-        this.setState({ step: 2 });
-        //post req
-    }
-    handleCodeSubmit(event) {
-        event.preventDefault();
-        this.setState({ step: 3 });
 
-        /*         fetch("/password/reset/start", {
+        fetch("/password/reset/start", {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify({ email: event.target.email.value }),
             headers: { "Content-Type": "application/json" },
         })
             .then((response) => response.json())
@@ -67,7 +65,14 @@ export default class ResetPassword extends Component {
                     this.setState({ error: "code/error faulty" });
                     return;
                 }
-            }); */ //another for code
+                this.setState({ step: 2 });
+            }); //another for code
+
+        //post req
+    }
+    handleCodeSubmit(event) {
+        event.preventDefault();
+        this.setState({ step: 3 });
     }
 
     render() {

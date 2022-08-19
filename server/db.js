@@ -57,43 +57,61 @@ function getUserByEmail(email) {
 
 //////////////////////////// RESET PASSWORD
 
-// const cryptoRandomString = require("crypto-random-string");
-// const secretCode = cryptoRandomString({
-//     length: 6,
-// });
+const cryptoRandomString = require("crypto-random-string");
 
-// function createCode(email, secretCode) {
-//     return getUserByEmail(email).then((foundUser) => {
-//         if (!foundUser) {
-//             console.log("email not found!");
-//             return null;
-//         }
-//         return something.then((email, code, created_at) => {
-//             return db
-//                 .query(
-//                     `INSERT INTO reset_codes (email, code, created_at) VALUES ($1, $2, $3) RETURNING *`,
-//                     [email, code, created_at]
-//                 )
-//                 .then((result) => result.rows[0]);
-//         });
-//     });
-// }
+function createCode({ email }) {
+    return getUserByEmail(email).then((foundUser) => {
+        if (!foundUser) {
+            console.log("email not found!");
+            return null;
+        }
+        const code = cryptoRandomString({
+            length: 6,
+        });
+        console.log("createcode", code);
+        return db
+            .query(
+                `INSERT INTO reset_codes (email, code) VALUES ($1, $2) RETURNING *`,
+                [email, code]
+            )
+            .then((result) => result.rows[0]);
+    });
+}
 
-// function checkCodeTable() {
-//     return db.query(`SELECT * FROM reset_codes
-// WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';`);
-// }
+function getCodeByEmailAndCode({ email, code }) {
+    return db
+        .query(
+            `SELECT * FROM reset_codes
+            WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'
+            AND email = $1 AND code = $2;`,
+            [email, code]
+        )
+        .then((result) => result.rows[0]);
+}
 
-// function updatePassword() {
-//     return hash(password).then((password_hash) => {
-//         return db
-//             .query(
-//                 `INSERT INTO users (password_hash) VALUES ($1) RETURNING *`,
-//                 [password_hash]
-//             )
-//             .then((result) => result.rows[0]);
-//     });
-// }
+function updatePassword(password) {
+    return hash(password).then((password_hash) => {
+        return db
+            .query(
+                `UPDATE users
+                 SET password_hash = $1 
+                 RETURNING *`,
+                [password_hash]
+            )
+            .then((result) => result.rows[0]);
+    });
+}
+
+//////////////////////////// UPDATE PROFILE PICTURE
+
+async function updateUserProfilePicture({ user_id, profile_picture_url }) {
+    const result = await db.query(
+        `
+    UPDATE users SET profile_picture_url = $1 WHERE id = $2 RETURNING profile_picture_url`,
+        [profile_picture_url, user_id]
+    );
+    return result.rows[0];
+}
 
 ////////////////////////////
 
@@ -102,7 +120,8 @@ module.exports = {
     getUserById,
     login,
     getUserByEmail,
-    // createCode,
-    // checkCodeTable,
-    // updatePassword,
+    createCode,
+    getCodeByEmailAndCode,
+    updatePassword,
+    updateUserProfilePicture,
 };
