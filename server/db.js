@@ -61,6 +61,7 @@ const cryptoRandomString = require("crypto-random-string");
 
 function createCode({ email }) {
     return getUserByEmail(email).then((foundUser) => {
+        console.log(foundUser);
         if (!foundUser) {
             console.log("email not found!");
             return null;
@@ -71,7 +72,7 @@ function createCode({ email }) {
         console.log("createcode", code);
         return db
             .query(
-                `INSERT INTO reset_codes (email, code) VALUES ($1, $2) RETURNING *`,
+                `INSERT INTO reset_codes (email, code) VALUES ($1, $2)  RETURNING *`,
                 [email, code]
             )
             .then((result) => result.rows[0]);

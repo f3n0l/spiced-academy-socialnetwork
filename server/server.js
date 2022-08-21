@@ -89,7 +89,7 @@ app.post("/logout", (request, response) => {
 
 //////////////////////////// RESET PASSWORD
 
-app.post("/password/reset/start", (request, response) => {
+app.post("/api/reset/start", (request, response) => {
     createCode(request.body)
         .then((foundUser) => {
             if (!foundUser) {
@@ -104,15 +104,22 @@ app.post("/password/reset/start", (request, response) => {
         });
 });
 
-app.post("/password/reset/verify", (request, response) => {
-    getCodeByEmailAndCode(request.body) //???
+app.post("/api/reset/verify", (request, response) => {
+    console.log(request.body);
+    getCodeByEmailAndCode(request.body) //request.session.currentEmail
         .then((foundCode) => {
             if (!foundCode) {
                 response.status(401).json({ error: "Email/Code incorrect!" });
                 return;
             }
-            updatePassword(request.body); //crap ////
+
+            if (request.body.code !== foundCode) {
+                response.status(401).json({ error: "incorrect code" });
+            }
+
+            updatePassword(request.body.currentEmail, request.body.password); //crap ////
         })
+
         .catch((error) => {
             console.log("POST /reset/verify", error);
             response.status(500).json({ error: "something went wrong" });
