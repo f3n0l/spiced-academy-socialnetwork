@@ -40,6 +40,7 @@ app.get("/api/users/me", (request, response) => {
         return;
     }
     getUserById(request.session.user_id).then((user) => {
+        console.log("wadawdjawd", user);
         response.json(user);
     });
 });
@@ -108,6 +109,8 @@ app.post("/api/reset/verify", (request, response) => {
     console.log(request.body);
     getCodeByEmailAndCode(request.body) //request.session.currentEmail
         .then((foundCode) => {
+            getUserById(request.body);
+            console.log(foundCode);
             if (!foundCode) {
                 response.status(401).json({ error: "Email/Code incorrect!" });
                 return;
@@ -149,6 +152,10 @@ app.post(
             });
     }
 );
+
+////////////////////////// BIO UPDATE
+
+app.post("/api/bio", (request, response) => {});
 
 //////////////////////////
 

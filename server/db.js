@@ -80,6 +80,7 @@ function createCode({ email }) {
 }
 
 function getCodeByEmailAndCode({ email, code }) {
+    console.log(email, code);
     return db
         .query(
             `SELECT * FROM reset_codes

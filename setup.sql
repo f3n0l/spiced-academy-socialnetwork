@@ -9,6 +9,7 @@ CREATE TABLE users (
     email VARCHAR(50) NOT NULL UNIQUE,
     profile_picture_url TEXT,
     password_hash VARCHAR NOT NULL,
+    bio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -16,6 +17,6 @@ CREATE TABLE reset_codes(
   id SERIAL PRIMARY KEY,
   email VARCHAR NOT NULL,
   code VARCHAR NOT NULL,
-  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import ProfilePicture from "./profilepicture";
 import PictureModal from "./picturemodal";
+import Profile from "./profile";
 
 export default class App extends Component {
     constructor(props) {
@@ -50,6 +51,7 @@ export default class App extends Component {
                         closeClick={this.clickCloseModal}
                     />
                 )}
+                {/*       <Profile /> */}
             </div>
         );
     }

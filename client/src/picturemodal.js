@@ -1,14 +1,3 @@
-/* export default function ProfilePictureUploader({ clickUpload, clickClose }) {
-    async function onSubmit(event) {
-        event.preventDefault();
-        const response = await fetch("/api/users/profile", {
-            method: "POST",
-            body: new FormData(event.target),
-        });
-    }
-}
- */
-
 export default function PictureModal({ closeClick, onUpload }) {
     function onSubmit(event) {
         event.preventDefault();

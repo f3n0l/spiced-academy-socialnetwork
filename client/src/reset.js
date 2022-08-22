@@ -7,6 +7,7 @@ export default class ResetPassword extends Component {
         this.state = {
             step: 1,
             error: "",
+            email: "",
         };
         this.checkStep = this.checkStep.bind(this);
         this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
@@ -19,7 +20,7 @@ export default class ResetPassword extends Component {
             return (
                 <div>
                     Send Reset Code
-                    <form onSubmit={this.handleEmailSubmit}>
+                    <form key={step} onSubmit={this.handleEmailSubmit}>
                         <input type="email" name="email" placeholder="Email" />
                         <button>Submit</button>
                     </form>
@@ -29,13 +30,25 @@ export default class ResetPassword extends Component {
             return (
                 <div>
                     Enter Reset Code
-                    <form onSubmit={this.handleCodeSubmit}>
-                        <input type="text" name="code" placeholder="Code" />
+                    <form
+                        autoComplete="false"
+                        key={step}
+                        onSubmit={this.handleCodeSubmit}
+                    >
                         <input
+                            autoComplete="false"
+                            type="text"
+                            name="code"
+                            placeholder="Code"
+                        />
+
+                        <input
+                            autoComplete="false"
                             type="password"
                             name="password"
                             placeholder="Password"
                         />
+
                         <button>Submit</button>
                     </form>
                 </div>
@@ -68,11 +81,12 @@ export default class ResetPassword extends Component {
             });
     }
     handleCodeSubmit(event) {
-        console.log(event);
+        console.log(event.target);
         event.preventDefault();
         const resetData = {
             code: event.target.code.value,
             password: event.target.password.value,
+            email: event.target.email.value,
         };
         fetch("/api/reset/verify", {
             method: "POST",
