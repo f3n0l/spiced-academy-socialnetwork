@@ -17,6 +17,7 @@ const {
     updatePassword,
     getCodeByEmailAndCode,
     updateUserProfilePicture,
+    editBio,
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -155,7 +156,17 @@ app.post(
 
 ////////////////////////// BIO UPDATE
 
-app.post("/api/bio", (request, response) => {});
+app.post("/api/bio", (request, response) => {
+    const user_id = request.session.user_id;
+    editBio(request.body.userBio, user_id)
+        .then((userBio) => {
+            response.json(userBio);
+        })
+        .catch((error) => {
+            console.log("POST /editBio", error);
+            response.statusCode(500).json({ message: "error editing bio" });
+        });
+});
 
 //////////////////////////
 

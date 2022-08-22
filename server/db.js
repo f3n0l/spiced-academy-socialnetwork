@@ -92,13 +92,13 @@ function getCodeByEmailAndCode({ email, code }) {
 }
 
 function updatePassword(password) {
-    return hash(password).then((password_hash) => {
+    return hash(password).then((password_hash, user_id) => {
         return db
             .query(
                 `UPDATE users
-                 SET password_hash = $1 
+                 SET password_hash = $1 WHERE id= $2
                  RETURNING *`,
-                [password_hash]
+                [password_hash, user_id]
             )
             .then((result) => result.rows[0]);
     });
@@ -115,6 +115,17 @@ async function updateUserProfilePicture({ user_id, profile_picture_url }) {
     return result.rows[0];
 }
 
+//////////////////////////// EDIT BIO
+
+async function editBio(userBio, user_id) {
+    const result = await db.query(
+        `
+    UPDATE users SET bio = $1 WHERE id=$2 RETURNING bio`,
+        [userBio, user_id]
+    );
+    return result.rows[0];
+}
+
 ////////////////////////////
 
 module.exports = {
@@ -126,4 +137,5 @@ module.exports = {
     getCodeByEmailAndCode,
     updatePassword,
     updateUserProfilePicture,
+    editBio,
 };

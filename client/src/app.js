@@ -28,15 +28,28 @@ export default class App extends Component {
         console.log(profile_picture_url);
     } //update user state
 
+    changeBio(userBio) {
+        this.setState({
+            ...this.state.user,
+            bio: userBio,
+        });
+    }
+
     async componentDidMount() {
         const response = await fetch("/api/users/me");
         const data = await response.json();
-        this.setState({ user: data });
+        this.setState({
+            user: { ...data /*  profile_picture_url: "default" */ },
+        });
     }
 
     render() {
         return (
             <div className="app">
+                <div className="header">
+                    <img className="headerlogo" src="./public/banner.PNG" />
+                    <p>Welcome</p>
+                </div>
                 <p> Welcome {this.state.user.first_name}</p>
                 <ProfilePicture
                     onButtonClick={this.onButtonClick}
@@ -45,13 +58,14 @@ export default class App extends Component {
                 <p>
                     <button onClick={this.onButtonClick}>Modal</button>
                 </p>
+
                 {this.state.showModal && (
                     <PictureModal
                         onUpload={this.onUpload}
                         closeClick={this.clickCloseModal}
                     />
                 )}
-                {/*       <Profile /> */}
+                <Profile changeBio={this.changeBio} user={this.state.user} />
             </div>
         );
     }
