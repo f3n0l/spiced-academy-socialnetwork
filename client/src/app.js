@@ -13,6 +13,7 @@ export default class App extends Component {
         this.onButtonClick = this.onButtonClick.bind(this);
         this.clickCloseModal = this.clickCloseModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
+        this.changeBio = this.changeBio.bind(this);
     }
     onButtonClick() {
         this.setState({
@@ -25,13 +26,21 @@ export default class App extends Component {
         });
     }
     onUpload(profile_picture_url) {
-        console.log(profile_picture_url);
-    } //update user state
+        this.setState({
+            user: {
+                ...this.state.user,
+                profile_picture_url: profile_picture_url,
+            },
+        });
+    }
 
     changeBio(userBio) {
+        console.log("changebio", userBio);
         this.setState({
-            ...this.state.user,
-            bio: userBio,
+            user: {
+                ...this.state.user,
+                bio: userBio,
+            },
         });
     }
 

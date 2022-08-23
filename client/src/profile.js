@@ -7,13 +7,12 @@ export default function Profile(props) {
     // console.log("toggleLight: ", toggleLight);
     return (
         <section className="profileRoom">
-            <h3>Profile of:</h3>
+            <h3>
+                Profile of: {props.user.first_name} {props.user.last_name}
+            </h3>
             <div>
-                {/*    <p>{this.state.user.first_name}</p>
-                <p>{this.state.user.last_name}</p> */}
-                <BioEditor />
+                <BioEditor changeBio={props.changeBio} user={props.user} />
             </div>
         </section>
     );
 }
-/*     <ProfilePicture /* user={props.user} */ /> */;

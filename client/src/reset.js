@@ -65,7 +65,7 @@ export default class ResetPassword extends Component {
     handleEmailSubmit(event) {
         event.preventDefault();
         console.log(this.state);
-
+        this.setState({ email: event.target.email.value });
         fetch("/api/reset/start", {
             method: "POST",
             body: JSON.stringify({ email: event.target.email.value }),
@@ -86,7 +86,7 @@ export default class ResetPassword extends Component {
         const resetData = {
             code: event.target.code.value,
             password: event.target.password.value,
-            email: event.target.email.value,
+            email: this.state.email,
         };
         fetch("/api/reset/verify", {
             method: "POST",

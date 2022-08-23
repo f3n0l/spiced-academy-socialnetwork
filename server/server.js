@@ -18,6 +18,8 @@ const {
     getCodeByEmailAndCode,
     updateUserProfilePicture,
     editBio,
+    getRecentUsers,
+    searchUsers,
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -107,11 +109,13 @@ app.post("/api/reset/start", (request, response) => {
 });
 
 app.post("/api/reset/verify", (request, response) => {
-    console.log(request.body);
+    console.log("hehehehehehe", request.body);
+    /*   getUserById(request.session.user_id).then((user) => {
+        console.log("useruser", user);
+    });
+ */
     getCodeByEmailAndCode(request.body) //request.session.currentEmail
         .then((foundCode) => {
-            getUserById(request.body);
-            console.log(foundCode);
             if (!foundCode) {
                 response.status(401).json({ error: "Email/Code incorrect!" });
                 return;
@@ -120,8 +124,8 @@ app.post("/api/reset/verify", (request, response) => {
             if (request.body.code !== foundCode) {
                 response.status(401).json({ error: "incorrect code" });
             }
-
-            updatePassword(request.body.currentEmail, request.body.password); //crap ////
+            console.log("herehere", request.body.password);
+            updatePassword(request.body.password); //crap ////
         })
 
         .catch((error) => {
@@ -158,7 +162,8 @@ app.post(
 
 app.post("/api/bio", (request, response) => {
     const user_id = request.session.user_id;
-    editBio(request.body.userBio, user_id)
+    console.log("hahahahahaah", request.body);
+    editBio(request.body.bio, user_id)
         .then((userBio) => {
             response.json(userBio);
         })
@@ -168,6 +173,16 @@ app.post("/api/bio", (request, response) => {
         });
 });
 
+////////////////////////// friendslist
+
+app.get("/api/users/recent", (request, response) => {
+    console.log("haha", request);
+});
+
+app.get("/api/users/search", async (request, response) => {
+    const searchResults = await searchUsers(request.query);
+    response.json(searchResults);
+});
 //////////////////////////
 
 app.get("*", (request, response) => {

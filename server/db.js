@@ -24,6 +24,7 @@ function createUser({ first_name, last_name, email, password }) {
 }
 
 function getUserById(id) {
+    console.log("getuserbyId", id);
     return db
         .query("SELECT * FROM users WHERE id = $1", [id])
         .then((result) => result.rows[0]);
@@ -92,6 +93,7 @@ function getCodeByEmailAndCode({ email, code }) {
 }
 
 function updatePassword(password) {
+    console.log("hah3333333a", password);
     return hash(password).then((password_hash, user_id) => {
         return db
             .query(
@@ -120,10 +122,22 @@ async function updateUserProfilePicture({ user_id, profile_picture_url }) {
 async function editBio(userBio, user_id) {
     const result = await db.query(
         `
-    UPDATE users SET bio = $1 WHERE id=$2 RETURNING bio`,
+    UPDATE users SET bio = $1 WHERE id = $2 RETURNING bio`,
         [userBio, user_id]
     );
+    console.log("in edit bio:", result);
+    console.log("userbio", userBio);
     return result.rows[0];
+}
+
+//////////////////////////// friendlist
+
+async function getRecentUsers({ limit }) {
+    console.log(limit);
+}
+
+async function searchUsers({ q }) {
+    console.log(q);
 }
 
 ////////////////////////////
@@ -138,4 +152,6 @@ module.exports = {
     updatePassword,
     updateUserProfilePicture,
     editBio,
+    searchUsers,
+    getRecentUsers,
 };
