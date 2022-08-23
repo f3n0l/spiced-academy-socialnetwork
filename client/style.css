@@ -22,3 +22,12 @@ img {
     justify-content: space-evenly;
     background-color: gray;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    height: 20px; /* Height of the footer */
+    background: #6cf;
+}

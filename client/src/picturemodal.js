@@ -13,15 +13,11 @@ export default function PictureModal({ closeClick, onUpload }) {
                 }
 
                 onUpload(data.profile_picture_url);
-                // call onUpload with the right information from data
             });
     }
 
     return (
         <div className="modal">
-            <p>
-                <button onClick={closeClick}>Close</button>
-            </p>
             <form onSubmit={onSubmit}>
                 <input
                     name="file"
@@ -31,6 +27,9 @@ export default function PictureModal({ closeClick, onUpload }) {
                 ></input>
                 <button>Submit</button>
             </form>
+            <p>
+                <button onClick={closeClick}>Close</button>
+            </p>
         </div>
     );
 }

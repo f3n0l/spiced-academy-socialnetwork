@@ -2,6 +2,8 @@ import { Component } from "react";
 import ProfilePicture from "./profilepicture";
 import PictureModal from "./picturemodal";
 import Profile from "./profile";
+import FindPeople from "./findpeople";
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -35,7 +37,6 @@ export default class App extends Component {
     }
 
     changeBio(userBio) {
-        console.log("changebio", userBio);
         this.setState({
             user: {
                 ...this.state.user,
@@ -54,28 +55,58 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="app">
-                <div className="header">
-                    <img className="headerlogo" src="./banner.PNG" />
-                    <p>Welcome</p>
-                </div>
-                <p> Welcome {this.state.user.first_name}</p>
-                <ProfilePicture
-                    onClick={this.onButtonClick}
-                    profile_picture_url={this.state.user.profile_picture_url}
-                />
-                <p>
-                    <button onClick={this.onButtonClick}>Modal</button>
-                </p>
+            <BrowserRouter>
+                <section className="app">
+                    <header>
+                        <div className="header">
+                            <NavLink to="/">
+                                <img
+                                    className="headerlogo"
+                                    src="./banner.PNG"
+                                />
+                            </NavLink>
+                            <p>the worknet</p>
+                            <nav className="nav">
+                                <NavLink to="/">Home</NavLink>
+                                <NavLink to="/people">Search People</NavLink>
+                            </nav>
+                        </div>
+                    </header>
+                    <section className="container">
+                        <Route path="/" exact>
+                            <p> Welcome {this.state.user.first_name}</p>
+                            <div
+                                className="profilePictureWrapper"
+                                onClick={this.onButtonClick}
+                            >
+                                <ProfilePicture
+                                    profile_picture_url={
+                                        this.state.user.profile_picture_url
+                                    }
+                                />
+                                {/*                <p>
+                        <button onClick={this.onButtonClick}>Modal</button>
+                    </p> */}
+                            </div>
+                            {this.state.showModal && (
+                                <PictureModal
+                                    onUpload={this.onUpload}
+                                    closeClick={this.clickCloseModal}
+                                />
+                            )}
+                            <Profile
+                                changeBio={this.changeBio}
+                                user={this.state.user}
+                            />
+                        </Route>
+                        <Route path="/users">
+                            <FindPeople />
+                        </Route>
+                    </section>
 
-                {this.state.showModal && (
-                    <PictureModal
-                        onUpload={this.onUpload}
-                        closeClick={this.clickCloseModal}
-                    />
-                )}
-                <Profile changeBio={this.changeBio} user={this.state.user} />
-            </div>
+                    <footer>Haha</footer>
+                </section>
+            </BrowserRouter>
         );
     }
 }

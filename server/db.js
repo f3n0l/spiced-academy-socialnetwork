@@ -133,11 +133,24 @@ async function editBio(userBio, user_id) {
 //////////////////////////// friendlist
 
 async function getRecentUsers({ limit }) {
-    console.log(limit);
+    const result = await db.query(
+        `
+        SELECT * FROM users
+        ORDER BY id DESC
+        LIMIT $1
+    `,
+        [limit]
+    );
+    return result.rows;
 }
 
 async function searchUsers({ q }) {
-    console.log(q);
+    const result = await db.query(
+        `SELECT * FROM users WHERE first_name ILIKE $1
+        OR last_name ILIKE $1`,
+        [q + "%"]
+    );
+    return result.rows[0];
 }
 
 ////////////////////////////

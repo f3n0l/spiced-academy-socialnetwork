@@ -175,8 +175,10 @@ app.post("/api/bio", (request, response) => {
 
 ////////////////////////// friendslist
 
-app.get("/api/users/recent", (request, response) => {
-    console.log("haha", request);
+app.get("/api/users/recent", async (request, response) => {
+    const recentUsers = await getRecentUsers(request.query);
+    response.json(recentUsers);
+    /*     .filter() */
 });
 
 app.get("/api/users/search", async (request, response) => {

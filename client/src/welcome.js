@@ -8,7 +8,7 @@ export default function Welcome() {
     return (
         <div className="welcome" id="welcome">
             <img src="./banner.PNG"></img>
-            <h1>yo !</h1>
+            <h1>Very network</h1>
 
             <BrowserRouter>
                 <Route exact path="/">

@@ -13,6 +13,7 @@ export default class BioEditor extends Component {
         this.handleBioChange = this.handleBioChange.bind(this);
         this.updateBio = this.updateBio.bind(this);
         this.cancelEdit = this.cancelEdit.bind(this);
+        /*         this.clickClearContents = this.clickClearContents.bind(this); */
     }
 
     handleClick() {
@@ -22,7 +23,6 @@ export default class BioEditor extends Component {
     }
 
     cancelEdit(event) {
-        console.log("ijawdj");
         this.setState({
             showTextArea: false,
             draftBio: event.target.value,
@@ -32,12 +32,17 @@ export default class BioEditor extends Component {
     handleBioChange(event) {
         this.bioChange = true;
         this.setState({ draftBio: event.target.value });
-        console.log("handlebiochange");
     }
+    /* 
+    clickClearContents() {
+        this.setState({
+      
+        });
+    } */
 
     updateBio(event) {
         event.preventDefault();
-        console.log("updatebio", this.state.draftBio);
+
         fetch("/api/bio", {
             //async??
             method: "POST",
@@ -49,7 +54,6 @@ export default class BioEditor extends Component {
             .then((response) => response.json())
             .then((data) => {
                 this.props.changeBio(data.bio);
-                console.log("haha", data.bio);
             })
             .catch((error) => console.log("bio update", error));
 
@@ -59,7 +63,6 @@ export default class BioEditor extends Component {
     }
 
     render() {
-        console.log("label:", this.props);
         if (!this.props.user.bio) {
             return (
                 <div className="bioeditor">
@@ -68,8 +71,12 @@ export default class BioEditor extends Component {
                     )}
                     {this.state.showTextArea && (
                         <form className="bioeditortext">
-                            <textarea></textarea>
-                            {/*      <button onClick={this.updateBio}></button> */}
+                            <textarea
+                                /*        onClick={this.clickClearContents} */
+                                onInput={this.handleBioChange}
+                                placeholder="About you..."
+                            ></textarea>
+                            <button onClick={this.updateBio}>Save Bio</button>
                             <button onClick={this.cancelEdit}>Cancel</button>
                         </form>
                     )}

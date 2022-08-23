@@ -11,7 +11,6 @@ export default class RegisterForm extends Component {
     }
     onFormSubmit(event) {
         event.preventDefault();
-        console.log("hi");
         const formData = {
             first_name: event.target.first_name.value,
             last_name: event.target.last_name.value,
