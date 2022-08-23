@@ -47,12 +47,12 @@ export default class App extends Component {
         return (
             <div className="app">
                 <div className="header">
-                    <img className="headerlogo" src="./public/banner.PNG" />
+                    <img className="headerlogo" src="./banner.PNG" />
                     <p>Welcome</p>
                 </div>
                 <p> Welcome {this.state.user.first_name}</p>
                 <ProfilePicture
-                    onButtonClick={this.onButtonClick}
+                    onClick={this.onButtonClick}
                     profile_picture_url={this.state.user.profile_picture_url}
                 />
                 <p>

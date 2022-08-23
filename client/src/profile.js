@@ -7,7 +7,6 @@ export default function Profile(props) {
     // console.log("toggleLight: ", toggleLight);
     return (
         <section className="profileRoom">
-            <ProfilePicture /* user={props.user} */ />
             <h3>Profile of:</h3>
             <div>
                 {/*    <p>{this.state.user.first_name}</p>
@@ -17,3 +16,4 @@ export default function Profile(props) {
         </section>
     );
 }
+/*     <ProfilePicture /* user={props.user} */ /> */;
