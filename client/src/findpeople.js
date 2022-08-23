@@ -51,7 +51,7 @@ export default function FindPeople() {
                         placeholder="Search for users..."
                     />
                 </p>
-                <ul className="searchResults">
+                <ul className="resultList">
                     {searchResults.map((user) => (
                         <li className="searchResultEntries" key={user.id}>
                             <img

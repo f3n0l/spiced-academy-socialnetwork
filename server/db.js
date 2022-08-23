@@ -147,7 +147,8 @@ async function getRecentUsers({ limit }) {
 async function searchUsers({ q }) {
     const result = await db.query(
         `SELECT * FROM users WHERE first_name ILIKE $1
-        OR last_name ILIKE $1`,
+        OR last_name ILIKE $1
+        ORDER BY first_name ASC`,
         [q + "%"]
     );
     return result.rows[0];

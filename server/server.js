@@ -178,12 +178,15 @@ app.post("/api/bio", (request, response) => {
 app.get("/api/users/recent", async (request, response) => {
     const recentUsers = await getRecentUsers(request.query);
     response.json(recentUsers);
+
     /*     .filter() */
 });
 
 app.get("/api/users/search", async (request, response) => {
     const searchResults = await searchUsers(request.query);
-    response.json(searchResults);
+    response.json(
+        searchResults.filter((user) => user.id !== request.session.user_id)
+    );
 });
 //////////////////////////
 

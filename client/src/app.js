@@ -99,7 +99,7 @@ export default class App extends Component {
                                 user={this.state.user}
                             />
                         </Route>
-                        <Route path="/users">
+                        <Route path="/people">
                             <FindPeople />
                         </Route>
                     </section>
