@@ -70,7 +70,9 @@ export default class App extends Component {
                             <nav className="nav">
                                 <NavLink to="/">Home</NavLink>
                                 <NavLink to="/people">Search People</NavLink>
-                                <NavLink to="/logout">Logout</NavLink>
+                                <form action="/logout" method="POST">
+                                    <button className="logout">Logout</button>
+                                </form>
                             </nav>
                         </div>
                     </header>

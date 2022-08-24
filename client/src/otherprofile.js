@@ -9,7 +9,6 @@ export default function OtherProfile() {
     const history = useHistory();
 
     useEffect(() => {
-        console.log(user);
         fetch(`/api/users/${user_id}`)
             .then((response) => response.json())
             .then(
@@ -31,13 +30,17 @@ export default function OtherProfile() {
 
     return (
         <div className="other-profile">
-            <p key={user.id}>
+            <div className="profile-picture">
                 <ProfilePicture
                     profile_picture_url={user.profile_picture_url}
                 />
-                {user.first_name} {user.last_name}
-            </p>
-            <p>{user.bio}</p>
+            </div>
+            <div className="profile-info">
+                <p key={user.id}>
+                    {user.first_name} {user.last_name}
+                </p>
+                <p>{user.bio}</p>
+            </div>
         </div>
     );
 }

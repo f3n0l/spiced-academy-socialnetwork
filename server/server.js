@@ -88,7 +88,7 @@ app.post("/api/login", (request, response) => {
 
 app.post("/logout", (request, response) => {
     request.session = null;
-    response.json({ message: "ok" });
+    response.redirect("/");
 });
 
 //////////////////////////// RESET PASSWORD

@@ -4,6 +4,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 2rem;
 }
 
 img {
@@ -21,13 +22,24 @@ img {
     flex-direction: row;
     justify-content: space-evenly;
     background-color: gray;
+    top: 0;
+}
+
+.nav {
+    justify-self: center;
+    align-self: center;
+    text-decoration: none;
 }
 
 footer {
-    position: absolute;
+    position: fixed;
+    margin-top: 10px;
     bottom: 0;
     width: 100%;
     left: 0;
     height: 20px; /* Height of the footer */
     background: #6cf;
+}
+
+.other-profile {
 }
