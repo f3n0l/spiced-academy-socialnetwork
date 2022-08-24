@@ -193,6 +193,17 @@ app.get("/api/users/search", async (request, response) => {
     );
 });
 
+////////////////////////// OTHER PROFILES
+
+app.get("/api/users/:user_id", async (request, response) => {
+    if (request.params.user_id == request.session.user_id) {
+        response.status(400).json({ error: "This is you!" });
+        return;
+    }
+    const otherUser = await getUserById(request.params.user_id);
+    response.json(otherUser || null);
+});
+
 //////////////////////////
 
 app.get("*", (request, response) => {
