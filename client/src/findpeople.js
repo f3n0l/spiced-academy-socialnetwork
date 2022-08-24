@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import ProfilePicture from "./profilepicture";
+import { Link } from "react-router-dom";
+
+//create userlist
 
 export default function FindPeople() {
     const [recentUsers, setRecentUsers] = useState([]);
@@ -6,7 +10,7 @@ export default function FindPeople() {
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        fetch("api/users/recent")
+        fetch("api/users/recent?limit=3")
             .then((response) => response.json())
             .then((data) => {
                 setRecentUsers(data);
@@ -29,19 +33,34 @@ export default function FindPeople() {
         setSearchTerm(event.target.value);
     }
 
+    function UserList({ users }) {
+        return !users.length ? (
+            "Start Searching!"
+        ) : (
+            <ul>
+                {users.map((user) => (
+                    <li key={user.id}>
+                        <Link to={`/users/${user.id}`}>
+                            <ProfilePicture
+                                profile_picture_url={user.profile_picture_url}
+                            />
+                            {user.first_name} {user.last_name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
     return (
+        //insert userlist instead UL -> UserList users={recentUsers}
         <section className="find-people">
             <h2>Find People</h2>
             <section className="recent-users">
                 <h3>Recent Users</h3>
-                <ul>
-                    {recentUsers.map((user) => (
-                        <li className="recentUserEntries" key={user}>
-                            {user}
-                        </li>
-                    ))}
-                </ul>
+                <UserList users={recentUsers}></UserList>
             </section>
+
             <section className="search-results">
                 <h3>Search for Users</h3>
                 <p>
@@ -51,18 +70,26 @@ export default function FindPeople() {
                         placeholder="Search for users..."
                     />
                 </p>
-                <ul className="resultList">
-                    {searchResults.map((user) => (
-                        <li className="searchResultEntries" key={user.id}>
-                            <img
-                                className="avatar"
-                                src={user.profile_picture_url}
-                            />
-                            {user.first_name} {user.last_name}
-                        </li>
-                    ))}
-                </ul>
+                <UserList users={searchResults}></UserList>
             </section>
         </section>
     );
 }
+/* 
+<ul>
+    {recentUsers.map((user) => (
+        <li className="recentUserEntries" key={user}>
+            {user}
+        </li>
+    ))}
+</ul>;
+
+<ul className="resultList">
+    {searchResults.map((user) => (
+        <li className="searchResultEntries" key={user.id}>
+            <img className="avatar" src={user.profile_picture_url} />
+            {user.first_name} {user.last_name}
+        </li>
+    ))}
+</ul>;
+ */

@@ -3,6 +3,7 @@ import ProfilePicture from "./profilepicture";
 import PictureModal from "./picturemodal";
 import Profile from "./profile";
 import FindPeople from "./findpeople";
+import OtherProfile from "./otherprofile";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 export default class App extends Component {
@@ -69,6 +70,7 @@ export default class App extends Component {
                             <nav className="nav">
                                 <NavLink to="/">Home</NavLink>
                                 <NavLink to="/people">Search People</NavLink>
+                                <NavLink to="/logout">Logout</NavLink>
                             </nav>
                         </div>
                     </header>
@@ -98,6 +100,9 @@ export default class App extends Component {
                                 changeBio={this.changeBio}
                                 user={this.state.user}
                             />
+                        </Route>
+                        <Route path="/users/:user_id">
+                            <OtherProfile />
                         </Route>
                         <Route path="/people">
                             <FindPeople />

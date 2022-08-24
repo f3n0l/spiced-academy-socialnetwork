@@ -1,5 +1,5 @@
 import { Component } from "react";
-/* import { Link } from "react-router-dom"; */
+import { Link } from "react-router-dom";
 
 export default class ResetPassword extends Component {
     constructor(props) {
@@ -56,7 +56,10 @@ export default class ResetPassword extends Component {
         } else if (step === 3) {
             return (
                 <div>
-                    <p>Success</p>
+                    <p>Password changed!</p>
+                    <Link to="/">
+                        <button>Home</button>
+                    </Link>
                 </div>
             );
         }
@@ -100,9 +103,8 @@ export default class ResetPassword extends Component {
                     this.setState({ error: "Invalid Code!" });
                     return;
                 }
-                if (data.id) {
-                    this.setState({ step: 3 });
-                }
+
+                this.setState({ step: 3 }); //link to login
             });
     }
 

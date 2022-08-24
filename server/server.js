@@ -95,8 +95,9 @@ app.post("/logout", (request, response) => {
 
 app.post("/api/reset/start", (request, response) => {
     createCode(request.body)
-        .then((foundUser) => {
-            if (!foundUser) {
+        .then((code) => {
+            console.log("something before", code);
+            if (!code) {
                 response.status(401).json({ error: "Email not found!" });
                 return;
             }
@@ -109,23 +110,26 @@ app.post("/api/reset/start", (request, response) => {
 });
 
 app.post("/api/reset/verify", (request, response) => {
-    console.log("hehehehehehe", request.body);
     /*   getUserById(request.session.user_id).then((user) => {
         console.log("useruser", user);
     });
  */
+
     getCodeByEmailAndCode(request.body) //request.session.currentEmail
         .then((foundCode) => {
+            console.log("in the server", foundCode, request.body.code);
             if (!foundCode) {
                 response.status(401).json({ error: "Email/Code incorrect!" });
                 return;
             }
 
-            if (request.body.code !== foundCode) {
+            if (request.body.code !== foundCode.code) {
                 response.status(401).json({ error: "incorrect code" });
             }
             console.log("herehere", request.body.password);
-            updatePassword(request.body.password); //crap ////
+            updatePassword(request.body.password, foundCode.email).then(() => {
+                response.json({ message: "ok" });
+            }); //crap ////
         })
 
         .catch((error) => {
@@ -188,6 +192,7 @@ app.get("/api/users/search", async (request, response) => {
         searchResults.filter((user) => user.id !== request.session.user_id)
     );
 });
+
 //////////////////////////
 
 app.get("*", (request, response) => {

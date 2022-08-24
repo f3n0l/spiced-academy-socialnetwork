@@ -46,7 +46,7 @@ export default class RegisterForm extends Component {
                     <input
                         name="last_name"
                         type="last_name"
-                        placeholder="First Name"
+                        placeholder="Last Name"
                         required
                     />
                     <input

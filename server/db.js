@@ -70,7 +70,7 @@ function createCode({ email }) {
         const code = cryptoRandomString({
             length: 6,
         });
-        console.log("createcode", code);
+
         return db
             .query(
                 `INSERT INTO reset_codes (email, code) VALUES ($1, $2)  RETURNING *`,
@@ -81,7 +81,6 @@ function createCode({ email }) {
 }
 
 function getCodeByEmailAndCode({ email, code }) {
-    console.log(email, code);
     return db
         .query(
             `SELECT * FROM reset_codes
@@ -92,15 +91,14 @@ function getCodeByEmailAndCode({ email, code }) {
         .then((result) => result.rows[0]);
 }
 
-function updatePassword(password) {
-    console.log("hah3333333a", password);
-    return hash(password).then((password_hash, user_id) => {
+function updatePassword(password, email) {
+    return hash(password).then((password_hash) => {
         return db
             .query(
                 `UPDATE users
-                 SET password_hash = $1 WHERE id= $2
+                 SET password_hash = $1 WHERE email= $2
                  RETURNING *`,
-                [password_hash, user_id]
+                [password_hash, email]
             )
             .then((result) => result.rows[0]);
     });
@@ -132,7 +130,7 @@ async function editBio(userBio, user_id) {
 
 //////////////////////////// friendlist
 
-async function getRecentUsers({ limit }) {
+async function getRecentUsers({ limit = 3 }) {
     const result = await db.query(
         `
         SELECT * FROM users
@@ -144,14 +142,14 @@ async function getRecentUsers({ limit }) {
     return result.rows;
 }
 
-async function searchUsers({ q }) {
+async function searchUsers({ q, limit = 10 }) {
     const result = await db.query(
         `SELECT * FROM users WHERE first_name ILIKE $1
         OR last_name ILIKE $1
-        ORDER BY first_name ASC`,
-        [q + "%"]
+        ORDER BY first_name ASC LIMIT $2`,
+        [q + "%", limit]
     );
-    return result.rows[0];
+    return result.rows;
 }
 
 ////////////////////////////
