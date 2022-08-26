@@ -61,10 +61,7 @@ export default class App extends Component {
                     <header>
                         <div className="header">
                             <NavLink to="/">
-                                <img
-                                    className="headerlogo"
-                                    src="./banner.PNG"
-                                />
+                                <img className="headerlogo" src="/banner.PNG" />
                             </NavLink>
                             <p>the worknet</p>
                             <nav className="nav">

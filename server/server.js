@@ -212,13 +212,30 @@ app.get("/api/users/:user_id", async (request, response) => {
 
 app.get("/api/friendship-status/:otherUser_id", async (request, response) => {
     try {
-        const friendStatus = await getFriendStatus(request.params);
-        response.json(friendStatus);
+        const friendStatus = await getFriendStatus(
+            request.params.otherUser_id,
+            request.session.user_id
+        );
+        if (!friendStatus) {
+            response.json("Add as a Friend");
+            return;
+        }
+        if (friendStatus.accepted) {
+            response.json("Delete friendship");
+            return;
+        }
+        if (friendStatus.sender_id == request.session.user_id) {
+            response.json("Cancel friend request");
+            return;
+        }
+        if (friendStatus.recipient_id == request.session.user_id) {
+            response.json("Accept friend request");
+            return;
+        }
+        /*  response.json(friendStatus); */
     } catch (error) {
         console.log("GET / friendstatus", error);
-        response
-            .statusCode(500)
-            .json({ message: "couldn't get friend status" });
+        response.status(500).json({ message: "couldn't get friend status" });
     }
 });
 
@@ -226,33 +243,27 @@ app.post("/api/friendship-action", async (request, response) => {
     const { buttonText, otherUser_id } = request.body;
     if (buttonText === "Add as a Friend") {
         try {
-            const buttonText = makeFriendRequest(
-                request.session.user_id,
-                otherUser_id
-            );
-            response.json(buttonText);
+            await makeFriendRequest(request.session.user_id, otherUser_id);
+            response.json("Cancel friend request");
         } catch (error) {
             console.log("friend request error", error);
             response.json({ message: "couldn't make friend request" });
         }
-    } else if (buttonText === "Cancel friend request") {
+    } else if (
+        buttonText === "Cancel friend request" ||
+        buttonText === "Delete friendship"
+    ) {
         try {
-            const buttonText = cancelFriendRequest(
-                request.session.user_id,
-                otherUser_id
-            );
-            response.json(buttonText);
+            await cancelFriendRequest(request.session.user_id, otherUser_id);
+            response.json("Add as a Friend");
         } catch (error) {
             console.log("friend request cancel error", error);
             response.json({ message: "couldn't cancel friend request" });
         }
     } else if (buttonText === "Accept friend request") {
         try {
-            const buttonText = acceptFriendRequest(
-                request.session.user_id,
-                otherUser_id
-            );
-            response.json(buttonText);
+            await acceptFriendRequest(request.session.user_id, otherUser_id);
+            response.json("Delete friendship");
         } catch (error) {
             console.log("friend request accept error", error);
             response.json({ message: "couldn't accept friend request" });
