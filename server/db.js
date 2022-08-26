@@ -128,7 +128,7 @@ async function editBio(userBio, user_id) {
     return result.rows[0];
 }
 
-//////////////////////////// friendlist
+//////////////////////////// searchusers/recent
 
 async function getRecentUsers({ limit = 3 }) {
     const result = await db.query(
@@ -152,6 +152,49 @@ async function searchUsers({ q, limit = 10 }) {
     return result.rows;
 }
 
+//////////////////////////// friend requests
+
+async function getFriendStatus(user_id, otherUser_id) {
+    const result = await db.query(
+        `SELECT * FROM friendships
+        WHERE (recipient_id = $1 AND sender_id = $2)
+        OR (recipient_id = $2 AND sender_id = $1)`,
+        [user_id, otherUser_id]
+    );
+    return result.rows[0];
+}
+
+async function makeFriendRequest(user_id, otherUser_id) {
+    const result = await db.query(
+        `INSERT INTO friendships (sender_id, recipient_id)
+        VALUES ($1, $2)
+        RETURNING sender_id, recipient_id, accepted`,
+        [user_id, otherUser_id]
+    );
+    return result.rows[0];
+}
+
+async function acceptFriendRequest(user_id, otherUser_id) {
+    const result = await db.query(
+        `UPDATE friendships
+        SET accepted = 'true' 
+        WHERE (recipient_id = $1 AND sender_id = $2) 
+        OR (recipient_id = $2 AND sender_id = $1)`,
+        [user_id, otherUser_id]
+    );
+    return result.rows[0];
+}
+
+async function cancelFriendRequest(user_id, otherUser_id) {
+    const result = await db.query(
+        `DELETE FROM friendships 
+        WHERE (recipient_id = $1 AND sender_id = $2) 
+        OR (recipient_id = $2 AND sender_id = $1)`,
+        [user_id, otherUser_id]
+    );
+    return result.rows[0];
+}
+
 ////////////////////////////
 
 module.exports = {
@@ -166,4 +209,8 @@ module.exports = {
     editBio,
     searchUsers,
     getRecentUsers,
+    getFriendStatus,
+    makeFriendRequest,
+    cancelFriendRequest,
+    acceptFriendRequest,
 };

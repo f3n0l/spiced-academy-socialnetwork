@@ -20,6 +20,10 @@ const {
     editBio,
     getRecentUsers,
     searchUsers,
+    getFriendStatus,
+    makeFriendRequest,
+    cancelFriendRequest,
+    acceptFriendRequest,
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -202,6 +206,58 @@ app.get("/api/users/:user_id", async (request, response) => {
     }
     const otherUser = await getUserById(request.params.user_id);
     response.json(otherUser || null);
+});
+
+////////////////////////// Friend Requests
+
+app.get("/api/friendship-status/:otherUser_id", async (request, response) => {
+    try {
+        const friendStatus = await getFriendStatus(request.params);
+        response.json(friendStatus);
+    } catch (error) {
+        console.log("GET / friendstatus", error);
+        response
+            .statusCode(500)
+            .json({ message: "couldn't get friend status" });
+    }
+});
+
+app.post("/api/friendship-action", async (request, response) => {
+    const { buttonText, otherUser_id } = request.body;
+    if (buttonText === "Add as a Friend") {
+        try {
+            const buttonText = makeFriendRequest(
+                request.session.user_id,
+                otherUser_id
+            );
+            response.json(buttonText);
+        } catch (error) {
+            console.log("friend request error", error);
+            response.json({ message: "couldn't make friend request" });
+        }
+    } else if (buttonText === "Cancel friend request") {
+        try {
+            const buttonText = cancelFriendRequest(
+                request.session.user_id,
+                otherUser_id
+            );
+            response.json(buttonText);
+        } catch (error) {
+            console.log("friend request cancel error", error);
+            response.json({ message: "couldn't cancel friend request" });
+        }
+    } else if (buttonText === "Accept friend request") {
+        try {
+            const buttonText = acceptFriendRequest(
+                request.session.user_id,
+                otherUser_id
+            );
+            response.json(buttonText);
+        } catch (error) {
+            console.log("friend request accept error", error);
+            response.json({ message: "couldn't accept friend request" });
+        }
+    }
 });
 
 //////////////////////////

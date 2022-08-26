@@ -75,21 +75,3 @@ export default function FindPeople() {
         </section>
     );
 }
-/* 
-<ul>
-    {recentUsers.map((user) => (
-        <li className="recentUserEntries" key={user}>
-            {user}
-        </li>
-    ))}
-</ul>;
-
-<ul className="resultList">
-    {searchResults.map((user) => (
-        <li className="searchResultEntries" key={user.id}>
-            <img className="avatar" src={user.profile_picture_url} />
-            {user.first_name} {user.last_name}
-        </li>
-    ))}
-</ul>;
- */
