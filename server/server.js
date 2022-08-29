@@ -24,6 +24,7 @@ const {
     makeFriendRequest,
     cancelFriendRequest,
     acceptFriendRequest,
+    getFriendships,
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -268,6 +269,18 @@ app.post("/api/friendship-action", async (request, response) => {
             console.log("friend request accept error", error);
             response.json({ message: "couldn't accept friend request" });
         }
+    }
+});
+
+////////////////////////// Friends List
+
+app.get("/api/friendships", async (request, response) => {
+    try {
+        const friendlist = await getFriendships(request.session.user_id);
+        response.json(friendlist);
+    } catch (error) {
+        console.log("error getting friendlist", error);
+        response.status(500).json({ message: "couldn't list friendrequests" });
     }
 });
 
