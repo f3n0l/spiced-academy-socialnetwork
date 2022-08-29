@@ -5,14 +5,18 @@ export default function FriendList({ friendships, onClick }) {
         <ul>
             {friendships.map((f) => (
                 <li key={f.user_id}>
-                    // put the profile picture as well!
+                    <a href={"/users/" + f.user_id}>
+                        <img src={f.profile_picture_url}></img>
+                        {f.first_name} {f.last_name}
+                    </a>
                     <div className="content">
                         <Link to={`/users/${f.user_id}`}>
                             {f.first_name} {f.last_name}
                         </Link>
                         <button onClick={() => onClick(f)}>
-                            // put the right button text based on the friendship
-                            status
+                            {f.accepted
+                                ? "Delete friendship"
+                                : "Accept friend request"}
                         </button>
                     </div>
                 </li>

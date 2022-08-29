@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FriendList from "./friendslist";
+import FriendList from "./friendlist";
 
 export default function Friends() {
     const [friendships, setFriendships] = useState([]);
@@ -15,6 +15,16 @@ export default function Friends() {
     }, []);
 
     function onClick(friendship) {
+        friendship.preventDefault();
+        fetch("/api/friendship-action", {
+            method: "POST",
+            body: JSON.stringify({
+                buttonText: friendship.accepted, ///nööö
+                otherUser_id: friendship.friendship_id,
+            }),
+            headers: { "Content-Type": "application/json" },
+        });
+
         console.log("onClick", friendship.friendship_id);
         const targetFriend_id = friendship.friendship_id;
         if (!friendship.accepted) {
