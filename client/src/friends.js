@@ -15,12 +15,16 @@ export default function Friends() {
     }, []);
 
     function onClick(friendship) {
-        friendship.preventDefault();
+        /*        friendship.preventDefault(); */
+        console.log("here here here", friendship);
         fetch("/api/friendship-action", {
             method: "POST",
             body: JSON.stringify({
-                buttonText: friendship.accepted, ///nööö
-                otherUser_id: friendship.friendship_id,
+                buttonText: friendship.accepted
+                    ? "Delete friendship"
+                    : "Accept friend request",
+
+                otherUser_id: friendship.user_id,
             }),
             headers: { "Content-Type": "application/json" },
         });
@@ -36,14 +40,15 @@ export default function Friends() {
             });
             console.log({ newFriends });
             setFriendships(newFriends);
+        } else {
+            const newFriends = friendships.filter(
+                (f) => f.user_id !== friendship.user_id
+            );
+            console.log({ newFriends });
+            setFriendships(newFriends);
         }
-        // if the friendship is accepted,
-        // cancel it and update the friendships state
-        // else
-        // accept it and update the friendships state as well
     }
 
-    // split the friendships in two groups
     const incoming = friendships.filter((f) => !f.accepted);
     const accepted = friendships.filter((f) => f.accepted);
 

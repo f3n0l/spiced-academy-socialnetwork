@@ -203,6 +203,7 @@ async function getFriendships(user_id) {
         friendships.recipient_id,
         friendships.id AS friendship_id,
         users.first_name, users.last_name, users.profile_picture_url
+        , users.id AS user_id
         FROM friendships
         JOIN users
         ON (

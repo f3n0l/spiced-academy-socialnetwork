@@ -242,10 +242,17 @@ app.get("/api/friendship-status/:otherUser_id", async (request, response) => {
 
 app.post("/api/friendship-action", async (request, response) => {
     const { buttonText, otherUser_id } = request.body;
+    console.log("we need to be here", buttonText);
     if (buttonText === "Add as a Friend") {
+        console.log("and also here", otherUser_id);
+        console.log("blabla", request.session.user_id);
         try {
-            await makeFriendRequest(request.session.user_id, otherUser_id);
+            const result = await makeFriendRequest(
+                request.session.user_id,
+                otherUser_id
+            );
             response.json("Cancel friend request");
+            console.log(result);
         } catch (error) {
             console.log("friend request error", error);
             response.json({ message: "couldn't make friend request" });

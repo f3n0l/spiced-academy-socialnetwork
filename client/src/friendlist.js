@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function FriendList({ friendships, onClick }) {
+    console.log(friendships);
     return (
         <ul>
             {friendships.map((f) => (
