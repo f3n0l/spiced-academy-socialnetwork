@@ -1,24 +1,42 @@
 import { Link } from "react-router-dom";
 
-export default function FriendList({ friendships, onClick }) {
-    console.log(friendships);
+export default function FriendList({
+    friendships,
+    onClickAccept,
+    onClickDeny,
+    showDeny,
+}) {
+    console.log("showdeny", showDeny);
+
     return (
         <ul>
             {friendships.map((f) => (
                 <li key={f.user_id}>
-                    <a href={"/users/" + f.user_id}>
+                    <a
+                        href={"/users/" + f.user_id}
+                        className="friendrequestpic"
+                    >
                         <img src={f.profile_picture_url}></img>
-                        {f.first_name} {f.last_name}
                     </a>
                     <div className="content">
-                        <Link to={`/users/${f.user_id}`}>
+                        <Link
+                            to={`/users/${f.user_id}`}
+                            className="friendrequestname"
+                        >
                             {f.first_name} {f.last_name}
                         </Link>
-                        <button onClick={() => onClick(f)}>
+                        <button
+                            onClick={() =>
+                                f.accepted ? onClickDeny(f) : onClickAccept(f)
+                            }
+                        >
                             {f.accepted
                                 ? "Delete friendship"
                                 : "Accept friend request"}
                         </button>
+                        {showDeny && (
+                            <button onClick={() => onClickDeny(f)}>Deny</button>
+                        )}
                     </div>
                 </li>
             ))}

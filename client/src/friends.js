@@ -14,39 +14,53 @@ export default function Friends() {
         // update the friendship state
     }, []);
 
-    function onClick(friendship) {
+    function onClickAccept(friendship) {
         /*        friendship.preventDefault(); */
-        console.log("here here here", friendship);
+
         fetch("/api/friendship-action", {
             method: "POST",
             body: JSON.stringify({
-                buttonText: friendship.accepted
-                    ? "Delete friendship"
-                    : "Accept friend request",
+                buttonText: "Accept friend request",
 
                 otherUser_id: friendship.user_id,
             }),
             headers: { "Content-Type": "application/json" },
         });
 
-        console.log("onClick", friendship.friendship_id);
         const targetFriend_id = friendship.friendship_id;
-        if (!friendship.accepted) {
-            const newFriends = friendships.map((f) => {
-                if (f.friendship_id === targetFriend_id) {
-                    f.accepted = true;
-                }
-                return f;
-            });
-            console.log({ newFriends });
-            setFriendships(newFriends);
-        } else {
+
+        const newFriends = friendships.map((f) => {
+            if (f.friendship_id === targetFriend_id) {
+                f.accepted = true;
+            }
+            return f;
+        });
+
+        setFriendships(newFriends);
+        /*  else {
             const newFriends = friendships.filter(
                 (f) => f.user_id !== friendship.user_id
             );
-            console.log({ newFriends });
+
             setFriendships(newFriends);
-        }
+        } */
+    }
+    function onClickDeny(friendship) {
+        fetch("/api/friendship-action", {
+            method: "POST",
+            body: JSON.stringify({
+                buttonText: "Delete friendship",
+
+                otherUser_id: friendship.user_id,
+            }),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        const newFriends = friendships.filter(
+            (f) => f.user_id !== friendship.user_id
+        );
+
+        setFriendships(newFriends);
     }
 
     const incoming = friendships.filter((f) => !f.accepted);
@@ -57,11 +71,16 @@ export default function Friends() {
             <h2>Friends</h2>
             <section className="incoming-list">
                 <h3>Incoming requests</h3>
-                <FriendList friendships={incoming} onClick={onClick} />
+                <FriendList
+                    friendships={incoming}
+                    onClickAccept={onClickAccept}
+                    showDeny
+                    onClickDeny={onClickDeny}
+                />
             </section>
             <section className="current-list">
                 <h3>Current friends</h3>
-                <FriendList friendships={accepted} onClick={onClick} />
+                <FriendList friendships={accepted} onClickDeny={onClickDeny} />
             </section>
         </section>
     );
