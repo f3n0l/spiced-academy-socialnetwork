@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom"; */
 /* import io from "socket.io-client"; */
 import { connect, disconnect } from "./socket";
+import ChatEntry from "./chatmessage";
 
 export default function Chat() {
     const [chatMessages, setChatMessages] = useState([]);
@@ -35,6 +36,7 @@ export default function Chat() {
         const socket = connect();
         const message = event.target.message.value;
         console.log("onSubmit", message);
+        socket.emit("newMessage", message);
         // emit the right socket event and send the right info
     }
 
@@ -42,7 +44,7 @@ export default function Chat() {
         <section className="chat">
             <h2>Chat</h2>
             <ul className="messages">
-                {/*    // loop over the messages and render them */}
+                <ChatEntry />
             </ul>
             <form onSubmit={onSubmit}>
                 <textarea
