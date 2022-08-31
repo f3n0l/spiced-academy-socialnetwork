@@ -89,9 +89,6 @@ export default class App extends Component {
                                         this.state.user.profile_picture_url
                                     }
                                 />
-                                {/*                <p>
-                        <button onClick={this.onButtonClick}>Modal</button>
-                    </p> */}
                             </div>
                             {this.state.showModal && (
                                 <PictureModal

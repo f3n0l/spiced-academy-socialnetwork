@@ -1,8 +1,6 @@
 import io from "socket.io-client";
 
 let socket;
-
-// lazy initialise pattern!
 export const connect = () => {
     if (!socket) {
         socket = io.connect();

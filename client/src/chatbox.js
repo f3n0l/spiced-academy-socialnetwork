@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-/* import { Link } from "react-router-dom"; */
-/* import io from "socket.io-client"; */
 import { connect, disconnect } from "./socket";
 import ChatEntry from "./chatmessage";
 
@@ -10,20 +8,17 @@ export default function Chat() {
         const socket = connect();
         function onRecentMessages(incomingMessages) {
             setChatMessages(incomingMessages);
-            // update the list of messages
         }
 
         function onBroadcastMessage(message) {
             setChatMessages((allMessages) => {
                 return [...allMessages, message];
             });
-            // update the list of messages * (see note below)
         }
 
         socket.on("recentMessages", onRecentMessages);
         socket.on("broadcastMessage", onBroadcastMessage);
 
-        // cleanup function returned from useEffect
         return () => {
             socket.off("recentMessages", onRecentMessages);
             socket.off("broadcastMessage", onBroadcastMessage);
@@ -35,16 +30,16 @@ export default function Chat() {
         event.preventDefault();
         const socket = connect();
         const message = event.target.message.value;
-        console.log("onSubmit", message);
-        socket.emit("newMessage", message);
-        // emit the right socket event and send the right info
+        socket.emit("sendMessage", message);
     }
 
     return (
         <section className="chat">
             <h2>Chat</h2>
             <ul className="messages">
-                <ChatEntry />
+                {chatMessages.map((message) => (
+                    <ChatEntry key={message.id} {...message} />
+                ))}
             </ul>
             <form onSubmit={onSubmit}>
                 <textarea

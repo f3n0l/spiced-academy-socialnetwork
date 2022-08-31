@@ -9,7 +9,7 @@ const { Server } = require("http");
 const server = Server(app);
 const { Bucket, s3Upload } = require("./s3");
 const { uploader } = require("./uploader");
-/* const { initChat } = require("./chat"); */
+const initChat = require("./chat");
 /* const helmet = require("helmet"); */
 
 const {
@@ -310,8 +310,8 @@ const io = socketConnect(server, {
 io.use((socket, next) => {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-/* 
-initChat(io); */
+
+initChat(io);
 
 //////////////////////////
 
