@@ -6,8 +6,6 @@ export default function FriendList({
     onClickDeny,
     showDeny,
 }) {
-    console.log("showdeny", showDeny);
-
     return (
         <ul>
             {friendships.map((f) => (

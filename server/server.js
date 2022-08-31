@@ -4,9 +4,12 @@ const compression = require("compression");
 const path = require("path");
 const { SESSION_SECRET } = require("./secrets.json");
 const cookieSession = require("cookie-session");
-
+const socketConnect = require("socket.io");
+const { Server } = require("http");
+const server = Server(app);
 const { Bucket, s3Upload } = require("./s3");
 const { uploader } = require("./uploader");
+const { initChat } = require("./chat");
 /* const helmet = require("helmet"); */
 
 const {
@@ -25,6 +28,8 @@ const {
     cancelFriendRequest,
     acceptFriendRequest,
     getFriendships,
+    /*     getRecentChatMessages,
+    saveChatMessage, */
 } = require("./db");
 
 ////////////////////////// MIDDLEWARE
@@ -33,12 +38,13 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(
-    cookieSession({
-        secret: SESSION_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+app.use(cookieSessionMiddleware);
+
+const cookieSessionMiddleware = cookieSession({
+    secret: SESSION_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+
 /* app.use(helmet()); */
 ////////////////////////// REGISTER
 
@@ -291,12 +297,28 @@ app.get("/api/friendships", async (request, response) => {
     }
 });
 
+////////////////////////// Chat
+
+const io = socketConnect(server, {
+    allowRequest: (request, callback) =>
+        callback(
+            null,
+            request.headers.referer.startsWith(`http://localhost:3000`)
+        ),
+});
+
+io.use((socket, next) => {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+initChat(io);
+
 //////////////////////////
 
 app.get("*", (request, response) => {
     response.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, () => {
+server.listen(process.env.PORT || 3001, () => {
     console.log("I'm listening.");
 });

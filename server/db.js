@@ -24,7 +24,6 @@ function createUser({ first_name, last_name, email, password }) {
 }
 
 function getUserById(id) {
-    console.log("getuserbyId", id);
     return db
         .query("SELECT * FROM users WHERE id = $1", [id])
         .then((result) => result.rows[0]);
@@ -33,7 +32,6 @@ function getUserById(id) {
 /////////////////////// LOGIN
 
 function login({ email, password }) {
-    console.log(email, password);
     return getUserByEmail(email).then((foundUser) => {
         if (!foundUser) {
             console.log("Email not found");
@@ -62,7 +60,6 @@ const cryptoRandomString = require("crypto-random-string");
 
 function createCode({ email }) {
     return getUserByEmail(email).then((foundUser) => {
-        console.log(foundUser);
         if (!foundUser) {
             console.log("email not found!");
             return null;
@@ -123,8 +120,7 @@ async function editBio(userBio, user_id) {
     UPDATE users SET bio = $1 WHERE id = $2 RETURNING bio`,
         [userBio, user_id]
     );
-    console.log("in edit bio:", result);
-    console.log("userbio", userBio);
+
     return result.rows[0];
 }
 
@@ -195,6 +191,8 @@ async function cancelFriendRequest(user_id, otherUser_id) {
     return result.rows[0];
 }
 
+//////////////////////////// Request List
+
 async function getFriendships(user_id) {
     const result = await db.query(
         `
@@ -219,7 +217,31 @@ async function getFriendships(user_id) {
     return result.rows;
 }
 
-//////////////////////////// Request List
+//////////////////////////// Chat
+
+async function getRecentChatMessages(limit = 10) {
+    const result = await db.query(
+        `SELECT users.first_name, users.last_name, users.profile_picture_url, 
+        chat_messages.message, chat_messages.created_at, chat_messages.id
+        FROM users
+        JOIN chat_messages
+        ON chat_messages.sender_id = users.id
+        ORDER BY chat_messages.id DESC
+        LIMIT $1`,
+        [limit]
+    );
+
+    return result.rows;
+}
+async function saveChatMessage({ sender_id, message }) {
+    const result = await db.query(
+        `INSERT INTO chat_messages (sender_id, message)
+        VALUES ($1, $2)        
+        RETURNING *`,
+        [sender_id, message]
+    );
+    return result.rows[0];
+}
 
 ////////////////////////////
 
@@ -240,4 +262,6 @@ module.exports = {
     cancelFriendRequest,
     acceptFriendRequest,
     getFriendships,
+    getRecentChatMessages,
+    saveChatMessage,
 };
