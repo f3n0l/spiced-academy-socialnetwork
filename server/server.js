@@ -9,7 +9,7 @@ const { Server } = require("http");
 const server = Server(app);
 const { Bucket, s3Upload } = require("./s3");
 const { uploader } = require("./uploader");
-const { initChat } = require("./chat");
+/* const { initChat } = require("./chat"); */
 /* const helmet = require("helmet"); */
 
 const {
@@ -38,13 +38,13 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieSessionMiddleware);
 
 const cookieSessionMiddleware = cookieSession({
     secret: SESSION_SECRET,
     maxAge: 1000 * 60 * 60 * 24 * 14,
 });
 
+app.use(cookieSessionMiddleware);
 /* app.use(helmet()); */
 ////////////////////////// REGISTER
 
@@ -310,8 +310,8 @@ const io = socketConnect(server, {
 io.use((socket, next) => {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-
-initChat(io);
+/* 
+initChat(io); */
 
 //////////////////////////
 

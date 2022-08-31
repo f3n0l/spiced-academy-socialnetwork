@@ -5,6 +5,7 @@ import Profile from "./profile";
 import FindPeople from "./findpeople";
 import OtherProfile from "./otherprofile";
 import Friends from "./friends";
+import Chat from "./chatbox";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 
 export default class App extends Component {
@@ -69,6 +70,7 @@ export default class App extends Component {
                                 <NavLink to="/">Home</NavLink>
                                 <NavLink to="/people">Search People</NavLink>
                                 <NavLink to="/friends">Friends</NavLink>
+                                <NavLink to="/chat">Chat</NavLink>
                                 <form action="/logout" method="POST">
                                     <button className="logout">Logout</button>
                                 </form>
@@ -110,6 +112,9 @@ export default class App extends Component {
                         </Route>
                         <Route path="/friends">
                             <Friends />
+                        </Route>
+                        <Route path="/chat">
+                            <Chat />
                         </Route>
                     </section>
 

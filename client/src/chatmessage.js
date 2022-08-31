@@ -1,64 +1,38 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ProfilePicture from "./profilepicture";
 
-import io from "socket.io-client";
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`;
+}
 
-let socket;
-
-// lazy initialise pattern!
-const connect = () => {
-    if (!socket) {
-        socket = io.connect();
-    }
-    return socket;
-};
-
-const disconnect = () => (socket = null);
-
-export default function Chat() {
-    const [chatMessages, setChatMessages] = useState([]);
-    useEffect(() => {
-        const socket = connect();
-        function onRecentMessages(incomingMessages) {
-            // update the list of messages
-        }
-
-        function onBroadcastMessage(message) {
-            // update the list of messages * (see note below)
-        }
-
-        socket.on("recentMessages", onRecentMessages);
-        socket.on("broadcastMessage", onBroadcastMessage);
-
-        // cleanup function returned from useEffect
-        return () => {
-            socket.off("recentMessages", onRecentMessages);
-            socket.off("broadcastMessage", broadcastMessage);
-            disconnect();
-        };
-    }, []);
-
-    function onSubmit(event) {
-        event.preventDefault();
-        const socket = connect();
-        // emit the right socket event and send the right info
-    }
-
+export default function ChatEntry({
+    user_id,
+    first_name,
+    last_name,
+    profile_picture_url,
+    message,
+    created_at,
+}) {
     return (
-        <section className="chat">
-            <h2>Chat</h2>
-            <ul className="messages">
-                // loop over the messages and render them
-            </ul>
-            <form onSubmit={onSubmit}>
-                <textarea
-                    name="message"
-                    rows={1}
-                    placeholder="Write your message..."
-                    required
-                ></textarea>
-                <button>Send</button>
-            </form>
-        </section>
+        <div>
+            <Link to={`/user/${user_id}`} className="chatAvatar">
+                <ProfilePicture
+                    first_name={first_name}
+                    last_name={last_name}
+                    profile_picture_url={profile_picture_url}
+                />
+            </Link>
+            <div className="chatContent">
+                <header className="chatInfo">
+                    <Link to={`/user/${user_id}`} className="chatUsername">
+                        {first_name}
+                        {last_name}
+                    </Link>
+                    <p className="chatDate">{formatDate(created_at)}</p>
+                </header>
+                <p className="chatMessage">{message}</p>
+            </div>
+        </div>
     );
 }
