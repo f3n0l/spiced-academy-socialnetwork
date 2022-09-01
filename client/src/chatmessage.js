@@ -16,7 +16,7 @@ export default function ChatEntry({
 }) {
     return (
         <div>
-            <Link to={`/user/${user_id}`} className="chatAvatar">
+            <Link to={`/users/${user_id}`} className="chatAvatar">
                 <ProfilePicture
                     first_name={first_name}
                     last_name={last_name}
@@ -25,7 +25,7 @@ export default function ChatEntry({
             </Link>
             <div className="chatContent">
                 <header className="chatInfo">
-                    <Link to={`/user/${user_id}`} className="chatUsername">
+                    <Link to={`/users/${user_id}`} className="chatUsername">
                         {first_name}
                         {last_name}
                     </Link>

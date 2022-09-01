@@ -50,5 +50,19 @@ function s3Upload(request, response, next) {
             response.sendStatus(500);
         });
 }
-
-module.exports = { Bucket, s3Upload };
+function s3Delete(filename) {
+    console.log(filename);
+    //  var params = {
+    //   Bucket: "ExampleBucket",
+    //   Key: filename
+    //  };
+    //  s3.deleteObject(params, function(err, data) {
+    //    if (err) console.log(err, err.stack); // an error occurred
+    //    else     console.log(data);           // successful response
+    //    /*
+    //    data = {
+    //    }
+    //    */
+    //  });
+}
+module.exports = { Bucket, s3Upload, s3Delete };

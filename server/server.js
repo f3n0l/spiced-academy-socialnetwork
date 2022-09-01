@@ -28,6 +28,9 @@ const {
     cancelFriendRequest,
     acceptFriendRequest,
     getFriendships,
+    deleteAccount,
+    deleteFriendships,
+    deleteAccountChat,
     /*     getRecentChatMessages,
     saveChatMessage, */
 } = require("./db");
@@ -312,6 +315,26 @@ io.use((socket, next) => {
 });
 
 initChat(io);
+
+////////////////////////// DELETE ACCOUNT
+
+app.post("/deleteaccount", async (request, response) => {
+    const user_id = request.session.user_id;
+    try {
+        await deleteAccountChat(user_id);
+
+        await deleteFriendships(user_id);
+
+        /*  const deletedUser= */ await deleteAccount(user_id);
+
+        request.session = null;
+
+        response.json({ message: "ok" }); ///???
+    } catch (error) {
+        console.log("POST / ACC DELETE", error);
+        response.status(500).json({ message: "couldn't delete account" });
+    }
+});
 
 //////////////////////////
 

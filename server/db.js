@@ -243,6 +243,45 @@ async function saveChatMessage({ sender_id, message }) {
     return result.rows[0];
 }
 
+//////////////////////////// delete account
+
+async function deleteAccount(user_id) {
+    const result = await db.query(
+        `
+    DELETE FROM users WHERE id = $1 RETURNING *`,
+        [user_id]
+    );
+    return result.rows[0];
+}
+async function deleteFriendships(user_id) {
+    const result = await db.query(
+        `
+    DELETE from friendships
+    WHERE recipient_id = $1 OR sender_id = $1 RETURNING *
+    `,
+        [user_id]
+    );
+    return result.rows;
+}
+async function deleteAccountChat(user_id) {
+    const result = await db.query(
+        ` DELETE
+        FROM chat_messages
+        WHERE sender_id = $1 RETURNING * `,
+        [user_id]
+    );
+    return result.rows;
+}
+
+//////////////////////////// online users
+
+async function getUsersByIds(user_id) {
+    const result = await db.query(`SELECT * FROM users WHERE id = ANY($1)`, [
+        user_id,
+    ]);
+    return result.rows;
+}
+
 ////////////////////////////
 
 module.exports = {
@@ -264,4 +303,8 @@ module.exports = {
     getFriendships,
     getRecentChatMessages,
     saveChatMessage,
+    deleteAccount,
+    deleteAccountChat,
+    deleteFriendships,
+    getUsersByIds,
 };

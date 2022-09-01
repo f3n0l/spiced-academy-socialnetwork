@@ -1,5 +1,6 @@
 import BioEditor from "./bioeditor";
 import ProfilePicture from "./profilepicture";
+import DeleteAccount from "./deleteaccount";
 
 export default function Profile(props) {
     return (
@@ -12,6 +13,7 @@ export default function Profile(props) {
             />
             <div>
                 <BioEditor changeBio={props.changeBio} user={props.user} />
+                <DeleteAccount />
             </div>
         </section>
     );
