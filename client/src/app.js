@@ -6,7 +6,9 @@ import FindPeople from "./findpeople";
 import OtherProfile from "./otherprofile";
 import Friends from "./friends";
 import Chat from "./chatbox";
+import OnlineUsers from "./onlineusers";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
+import { connect, disconnect } from "./socket.js";
 
 export default class App extends Component {
     constructor(props) {
@@ -54,6 +56,8 @@ export default class App extends Component {
         this.setState({
             user: { ...data /*  profile_picture_url: "default" */ },
         });
+        connect();
+        disconnect();
     }
 
     render() {
@@ -71,6 +75,7 @@ export default class App extends Component {
                                 <NavLink to="/people">Search People</NavLink>
                                 <NavLink to="/friends">Friends</NavLink>
                                 <NavLink to="/chat">Chat</NavLink>
+                                <NavLink to="/onlineusers">Now Online</NavLink>
                                 <form action="/logout" method="POST">
                                     <button className="logout">Logout</button>
                                 </form>
@@ -112,6 +117,9 @@ export default class App extends Component {
                         </Route>
                         <Route path="/chat">
                             <Chat />
+                        </Route>
+                        <Route path="/onlineusers">
+                            <OnlineUsers />
                         </Route>
                     </section>
 

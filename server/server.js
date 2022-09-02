@@ -57,21 +57,17 @@ app.get("/api/users/me", (request, response) => {
         return;
     }
     getUserById(request.session.user_id).then((user) => {
-        console.log("wadawdjawd", user);
         response.json(user);
     });
 });
 
 app.post("/api/users", (request, response) => {
-    console.log("post /reg", request.body);
     createUser(request.body)
         .then((newUser) => {
-            console.log("newuser", newUser);
             request.session.user_id = newUser.id;
             response.json(newUser);
         })
         .catch((error) => {
-            console.log("post /api/users", error);
             if (error.constraint === "email") {
                 response.status(400).json({ error: "E-Mail already used" });
                 return;
@@ -83,7 +79,6 @@ app.post("/api/users", (request, response) => {
 ////////////////////////// LOGIN
 
 app.post("/api/login", (request, response) => {
-    console.log("login", request.body);
     login(request.body)
         .then((foundUser) => {
             if (!foundUser) {
@@ -110,7 +105,6 @@ app.post("/logout", (request, response) => {
 app.post("/api/reset/start", (request, response) => {
     createCode(request.body)
         .then((code) => {
-            console.log("something before", code);
             if (!code) {
                 response.status(401).json({ error: "Email not found!" });
                 return;
@@ -131,7 +125,6 @@ app.post("/api/reset/verify", (request, response) => {
 
     getCodeByEmailAndCode(request.body) //request.session.currentEmail
         .then((foundCode) => {
-            console.log("in the server", foundCode, request.body.code);
             if (!foundCode) {
                 response.status(401).json({ error: "Email/Code incorrect!" });
                 return;
@@ -140,7 +133,7 @@ app.post("/api/reset/verify", (request, response) => {
             if (request.body.code !== foundCode.code) {
                 response.status(401).json({ error: "incorrect code" });
             }
-            console.log("herehere", request.body.password);
+
             updatePassword(request.body.password, foundCode.email).then(() => {
                 response.json({ message: "ok" });
             }); //crap ////
@@ -160,7 +153,6 @@ app.post(
     s3Upload,
     (request, response) => {
         const url = `https://s3.amazonaws.com/${Bucket}/${request.file.filename}`;
-        console.log("POST /upload", url);
 
         updateUserProfilePicture({
             user_id: request.session.user_id,
@@ -180,7 +172,7 @@ app.post(
 
 app.post("/api/bio", (request, response) => {
     const user_id = request.session.user_id;
-    console.log("hahahahahaah", request.body);
+
     editBio(request.body.bio, user_id)
         .then((userBio) => {
             response.json(userBio);
@@ -251,10 +243,8 @@ app.get("/api/friendship-status/:otherUser_id", async (request, response) => {
 
 app.post("/api/friendship-action", async (request, response) => {
     const { buttonText, otherUser_id } = request.body;
-    console.log("we need to be here", buttonText);
+
     if (buttonText === "Add as a Friend") {
-        console.log("and also here", otherUser_id);
-        console.log("blabla", request.session.user_id);
         try {
             const result = await makeFriendRequest(
                 request.session.user_id,
@@ -329,7 +319,7 @@ app.post("/deleteaccount", async (request, response) => {
 
         request.session = null;
 
-        response.json({ message: "ok" }); ///???
+        response.json({ message: "ok" });
     } catch (error) {
         console.log("POST / ACC DELETE", error);
         response.status(500).json({ message: "couldn't delete account" });

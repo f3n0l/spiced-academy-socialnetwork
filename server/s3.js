@@ -51,6 +51,7 @@ function s3Upload(request, response, next) {
         });
 }
 function s3Delete(filename) {
+    
     console.log(filename);
     //  var params = {
     //   Bucket: "ExampleBucket",
