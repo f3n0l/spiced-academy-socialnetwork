@@ -11,17 +11,11 @@ export default function OnlineUsers() {
             setOnlineUsers(user);
         }
 
-        /*         function onUserLeft(user) {
-            console.log("iwadjiawjdioawdjaowidj", user);
-            setOnlineUsers(user);
-        } */
-
         socket.on("userJoined", onUserJoined);
-        /*         socket.on("userLeft", onUserLeft); */
 
         return () => {
             socket.off("userJoined", onUserJoined);
-            /*     socket.off("userLeft", onUserLeft) */ disconnect();
+            disconnect();
         };
     }, []);
 

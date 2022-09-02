@@ -3,7 +3,7 @@ export default function DeleteAccount({ user_id }) {
         event.preventDefault();
         const check = prompt("Write DELETE to confirm!");
         if (check !== "DELETE") {
-            alert("Wrong word!");
+            alert("Cancelled!");
             return;
         } else if (
             !confirm("Are you sure? Your Account will be GONE for GOOD!")
