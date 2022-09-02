@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { connect, disconnect } from "./socket";
 import ChatEntry from "./chatmessage";
 
 export default function Chat() {
     const [chatMessages, setChatMessages] = useState([]);
+
     useEffect(() => {
         const socket = connect();
         function onRecentMessages(incomingMessages) {
@@ -26,6 +27,15 @@ export default function Chat() {
         };
     }, []);
 
+    const lastChatRef = useRef(null);
+    useEffect(() => {
+        if (!lastChatRef.current) {
+            return;
+        }
+
+        lastChatRef.current.scrollIntoView({ behavior: "smooth" });
+    }, [chatMessages]);
+
     function onSubmit(event) {
         event.preventDefault();
         const socket = connect();
@@ -38,7 +48,11 @@ export default function Chat() {
             <h2>Chat</h2>
             <ul className="messages">
                 {chatMessages.map((message) => (
-                    <ChatEntry key={message.id} {...message} />
+                    <ChatEntry
+                        key={message.id}
+                        ref={lastChatRef}
+                        {...message}
+                    />
                 ))}
             </ul>
             <form onSubmit={onSubmit}>

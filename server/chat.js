@@ -16,15 +16,14 @@ module.exports = function initChat(io) {
         }
 
         onlineUsers[socket.id] = user_id;
-        /*  console.log(onlineUsers); */
+
         let usersArray = Object.values(onlineUsers);
         let onlinePeople = await getUsersByIds(usersArray);
-        console.log("this is ", onlinePeople);
 
         io.emit("userJoined", onlinePeople);
 
         const latestMessages = await getRecentChatMessages();
-        socket.emit("recentMessages", latestMessages);
+        socket.emit("recentMessages", latestMessages.reverse());
 
         socket.on("sendMessage", async (text) => {
             const newMessage = await saveChatMessage({
