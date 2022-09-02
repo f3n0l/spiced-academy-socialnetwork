@@ -47,8 +47,8 @@ module.exports = function initChat(io) {
             });
         });
 
-        /*   socket.on("friendRequest", async (friendships) => {
-            const newFriend = await makeFriendRequest({
+        /*  socket.on("friendRequest", async (friendships) => {
+            const newFriendRequest = await getFriendships({
                 user: user_id,
                 otherUser: otherUser_id,
             });

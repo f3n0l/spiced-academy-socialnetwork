@@ -1,4 +1,3 @@
-// compare request.params.user_id = number 1? === login ID => return error+ redirect
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import ProfilePicture from "./profilepicture";
@@ -37,10 +36,7 @@ export default function OtherProfile() {
                 </p>
                 <p>{user.bio}</p>
             </div>
-            <FriendButton
-                /* otherUser_id={user.otherUser_id} */
-                user_id={user_id}
-            />
+            <FriendButton user_id={user_id} />
         </div>
     );
 }

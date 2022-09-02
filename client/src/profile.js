@@ -8,9 +8,9 @@ export default function Profile(props) {
             <h3>
                 Profile of: {props.user.first_name} {props.user.last_name}
             </h3>
-            <ProfilePicture
+            {/*  <ProfilePicture
                 profile_picture_url={props.user.profile_picture_url}
-            />
+            /> */}
             <div>
                 <BioEditor changeBio={props.changeBio} user={props.user} />
                 <DeleteAccount />

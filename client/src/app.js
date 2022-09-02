@@ -79,7 +79,26 @@ export default class App extends Component {
                                 <form action="/logout" method="POST">
                                     <button className="logout">Logout</button>
                                 </form>
-                            </nav>
+                            </nav>{" "}
+                            <div
+                                className="profilePictureWrapper"
+                                onClick={this.onButtonClick}
+                            >
+                                <ProfilePicture
+                                    profile_picture_url={
+                                        this.state.user.profile_picture_url
+                                    }
+                                />
+                            </div>
+                            {this.state.showModal && (
+                                <PictureModal
+                                    onUpload={this.onUpload}
+                                    closeClick={this.clickCloseModal}
+                                    profile_picture_url={
+                                        this.state.user.profile_picture_url
+                                    }
+                                />
+                            )}
                         </div>
                     </header>
                     <section className="container">
@@ -95,12 +114,12 @@ export default class App extends Component {
                                     }
                                 />
                             </div>
-                            {this.state.showModal && (
+                            {/*     {this.state.showModal && (
                                 <PictureModal
                                     onUpload={this.onUpload}
                                     closeClick={this.clickCloseModal}
                                 />
-                            )}
+                            )} */}
                             <Profile
                                 changeBio={this.changeBio}
                                 user={this.state.user}

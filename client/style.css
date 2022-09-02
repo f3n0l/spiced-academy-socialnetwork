@@ -69,3 +69,16 @@ footer {
 .logout {
     background-color: rebeccapurple;
 }
+
+.modal {
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #dac1ff;
+    margin-top: 500px;
+    position: fixed;
+    padding: 2rem;
+}

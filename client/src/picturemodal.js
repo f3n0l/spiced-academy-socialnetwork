@@ -1,3 +1,5 @@
+import ProfilePicture from "./profilepicture";
+
 export default function PictureModal({ closeClick, onUpload }) {
     function onSubmit(event) {
         event.preventDefault();
@@ -18,6 +20,8 @@ export default function PictureModal({ closeClick, onUpload }) {
 
     return (
         <div className="modal">
+            <ProfilePicture />
+            <p>Change Profile Picture?</p>
             <form onSubmit={onSubmit}>
                 <input
                     name="file"
