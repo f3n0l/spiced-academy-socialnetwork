@@ -3,6 +3,7 @@ const {
     saveChatMessage,
     getUserById,
     getUsersByIds,
+    /*  makeFriendRequest, */
 } = require("./db");
 
 module.exports = function initChat(io) {
@@ -22,6 +23,14 @@ module.exports = function initChat(io) {
 
         io.emit("userJoined", onlinePeople);
 
+        socket.on("disconnect", async () => {
+            delete onlineUsers[socket.id];
+
+            let usersArray = Object.values(onlineUsers);
+            let onlinePeople = await getUsersByIds(usersArray);
+            io.emit("userJoined", onlinePeople);
+        });
+
         const latestMessages = await getRecentChatMessages();
         socket.emit("recentMessages", latestMessages.reverse());
 
@@ -37,12 +46,17 @@ module.exports = function initChat(io) {
                 message_id: newMessage.id,
             });
         });
-        socket.on("disconnect", async () => {
-            delete onlineUsers[socket.id];
 
-            let usersArray = Object.values(onlineUsers);
-            let onlinePeople = await getUsersByIds(usersArray);
-            io.emit("userJoined", onlinePeople);
-        });
+        /*   socket.on("friendRequest", async (friendships) => {
+            const newFriend = await makeFriendRequest({
+                user: user_id,
+                otherUser: otherUser_id,
+            });
+            console.log("iwjadjd", friendships);
+            io.emit("newFriendRequest", {
+                from: friendships.sender_id,
+                to: friendships.otherUser_id,
+            });
+        }); */
     });
 };
