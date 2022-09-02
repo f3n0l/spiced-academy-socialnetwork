@@ -1,6 +1,10 @@
 import ProfilePicture from "./profilepicture";
 
-export default function PictureModal({ closeClick, onUpload }) {
+export default function PictureModal({
+    closeClick,
+    onUpload,
+    profile_picture_url,
+}) {
     function onSubmit(event) {
         event.preventDefault();
         fetch("/api/users/profile", {
@@ -20,7 +24,11 @@ export default function PictureModal({ closeClick, onUpload }) {
 
     return (
         <div className="modal">
-            <ProfilePicture />
+            <ProfilePicture
+                className="modalPicture"
+                profile_picture_url={profile_picture_url}
+            />
+
             <p>Change Profile Picture?</p>
             <form onSubmit={onSubmit}>
                 <input

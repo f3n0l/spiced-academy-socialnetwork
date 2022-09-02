@@ -38,6 +38,7 @@ export default class App extends Component {
                 ...this.state.user,
                 profile_picture_url: profile_picture_url,
             },
+            showModal: false,
         });
     }
 

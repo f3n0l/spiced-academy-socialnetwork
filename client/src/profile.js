@@ -1,5 +1,5 @@
 import BioEditor from "./bioeditor";
-import ProfilePicture from "./profilepicture";
+/* import ProfilePicture from "./profilepicture"; */
 import DeleteAccount from "./deleteaccount";
 
 export default function Profile(props) {

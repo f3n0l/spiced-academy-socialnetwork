@@ -82,3 +82,8 @@ footer {
     position: fixed;
     padding: 2rem;
 }
+
+.modalPicture {
+    width: 500px;
+    height: 500px;
+}
