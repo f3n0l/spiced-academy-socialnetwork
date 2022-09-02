@@ -23,6 +23,9 @@ img {
     justify-content: space-evenly;
     background-color: gray;
     top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
 }
 
 .nav {
@@ -42,4 +45,18 @@ footer {
 }
 
 .other-profile {
+}
+
+.chat {
+}
+
+.chatlist {
+    background: #e5e5e5;
+    margin: 0;
+    padding: 0 10px 10px;
+    max-height: 80vh;
+    overflow-x: hidden;
+}
+.chat img {
+    max-width: 100px;
 }

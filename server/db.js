@@ -219,10 +219,10 @@ async function getFriendships(user_id) {
 
 //////////////////////////// Chat
 
-async function getRecentChatMessages(limit = 10) {
+async function getRecentChatMessages(limit = 20) {
     const result = await db.query(
-        `SELECT users.first_name, users.last_name, users.profile_picture_url, 
-        chat_messages.message, chat_messages.created_at, chat_messages.id
+        `SELECT users.first_name, users.last_name, users.profile_picture_url,
+        chat_messages.message, chat_messages.created_at, chat_messages.id AS message_id, chat_messages.sender_id
         FROM users
         JOIN chat_messages
         ON chat_messages.sender_id = users.id

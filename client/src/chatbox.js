@@ -33,7 +33,7 @@ export default function Chat() {
             return;
         }
 
-        lastChatRef.current.scrollIntoView({ behavior: "smooth" });
+        lastChatRef.current.scrollIntoView({ behaviour: "smooth" });
     }, [chatMessages]);
 
     function onSubmit(event) {
@@ -46,15 +46,17 @@ export default function Chat() {
     return (
         <section className="chat">
             <h2>Chat</h2>
-            <ul className="messages">
+            <div className="chatlist">
                 {chatMessages.map((message) => (
-                    <ChatEntry
-                        key={message.id}
+                    <ul
+                        className="messages"
                         ref={lastChatRef}
-                        {...message}
-                    />
+                        key={message.message_id}
+                    >
+                        <ChatEntry {...message} />
+                    </ul>
                 ))}
-            </ul>
+            </div>
             <form onSubmit={onSubmit}>
                 <textarea
                     name="message"
