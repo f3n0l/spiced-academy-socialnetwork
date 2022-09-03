@@ -53,25 +53,26 @@ export default function FindPeople() {
     }
 
     return (
-        //insert userlist instead UL -> UserList users={recentUsers}
-        <section className="find-people">
-            <h2>Find People</h2>
-            <section className="recent-users">
-                <h3>Recent Users</h3>
-                <UserList users={recentUsers}></UserList>
-            </section>
+        <div className="people">
+            <section className="find-people">
+                <h2>Find People</h2>
+                <section className="recent-users">
+                    <h3>Recent Users</h3>
+                    <UserList users={recentUsers}></UserList>
+                </section>
 
-            <section className="search-results">
-                <h3>Search for Users</h3>
-                <p>
-                    <input
-                        defaultValue={searchTerm}
-                        onChange={onChange}
-                        placeholder="Search for users..."
-                    />
-                </p>
-                <UserList users={searchResults}></UserList>
+                <section className="search-results">
+                    <h3>Search for Users</h3>
+                    <p>
+                        <input
+                            defaultValue={searchTerm}
+                            onChange={onChange}
+                            placeholder="Search for users..."
+                        />
+                    </p>
+                    <UserList users={searchResults}></UserList>
+                </section>
             </section>
-        </section>
+        </div>
     );
 }

@@ -7,8 +7,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 export default function Welcome() {
     return (
         <div className="welcome" id="welcome">
-            <img src="./banner.PNG"></img>
-            <h1>Very network</h1>
+            <img className="welcomebanner" src="./banner.PNG"></img>
 
             <BrowserRouter>
                 <Route exact path="/">

@@ -35,7 +35,8 @@ export default class RegisterForm extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="register">
+                <h2>Join the madness!</h2>
                 <form onSubmit={this.onFormSubmit}>
                     <input
                         name="first_name"
@@ -64,7 +65,9 @@ export default class RegisterForm extends Component {
                     {this.state.error && <p>{this.state.error}</p>}
                     <button>Register</button>
                 </form>
-                <Link to="/login">Click here to Log in!</Link>
+                <Link className="logininstead" to="/login">
+                    Click here to Log in!
+                </Link>
             </div>
         );
     }

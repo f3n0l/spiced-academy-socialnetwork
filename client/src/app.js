@@ -70,13 +70,25 @@ export default class App extends Component {
                             <NavLink to="/">
                                 <img className="headerlogo" src="/banner.PNG" />
                             </NavLink>
-                            <p>the worknet</p>
+                            <div className="headername">
+                                <p>the worknet</p>
+                            </div>
                             <nav className="nav">
-                                <NavLink to="/">Home</NavLink>
-                                <NavLink to="/people">Search People</NavLink>
-                                <NavLink to="/friends">Friends</NavLink>
-                                <NavLink to="/chat">Chat</NavLink>
-                                <NavLink to="/onlineusers">Now Online</NavLink>
+                                <NavLink to="/" className="navlink">
+                                    Home
+                                </NavLink>
+                                <NavLink to="/people" className="navlink">
+                                    Search People
+                                </NavLink>
+                                <NavLink to="/friends" className="navlink">
+                                    Friends
+                                </NavLink>
+                                <NavLink to="/chat" className="navlink">
+                                    Chat
+                                </NavLink>
+                                <NavLink to="/onlineusers" className="navlink">
+                                    Now Online
+                                </NavLink>
                                 <form action="/logout" method="POST">
                                     <button className="logout">Logout</button>
                                 </form>
@@ -102,9 +114,12 @@ export default class App extends Component {
                             )}
                         </div>
                     </header>
-                    <section className="container">
+                    <section className="homecontainer">
                         <Route path="/" exact>
-                            <p> Welcome {this.state.user.first_name}</p>
+                            <p>
+                                Welcome {this.state.user.first_name}{" "}
+                                {this.state.user.last_name}!
+                            </p>
                             <div
                                 className="profilePictureWrapper"
                                 onClick={this.onButtonClick}
@@ -143,7 +158,7 @@ export default class App extends Component {
                         </Route>
                     </section>
 
-                    <footer>Haha</footer>
+                    <footer> &copy;Yes</footer>
                 </section>
             </BrowserRouter>
         );

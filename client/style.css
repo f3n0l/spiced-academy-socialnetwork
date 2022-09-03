@@ -1,3 +1,53 @@
+* {
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* header {
+    width: 100%;
+
+    display: block;
+         padding: 20px 5%; 
+    background-color: #6cf;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+} */
+
+.header {
+    padding: 20px 10px;
+    width: 100%;
+    height: 3.75rem;
+    display: flex;
+    margin: 0 auto;
+    background-color: #dac1ff;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    letter-spacing: 1px;
+    left: 0;
+    right: 0;
+    top: 0;
+    min-width: 20rem;
+
+    position: fixed;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.headerlogo {
+    width: 50px;
+    height: 50px;
+}
+
+.profilePicture {
+    width: 50px;
+    height: 50px;
+}
+
 body {
     background-color: ghostwhite;
     display: flex;
@@ -14,35 +64,15 @@ img {
     height: 20%;
 }
 
-.headerlogo {
-    width: 50px;
-    height: 50px;
-}
-
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    background-color: gray;
-    top: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-}
-
-.nav {
-    justify-self: center;
-    align-self: center;
-    text-decoration: none;
-}
-
 footer {
     position: fixed;
     margin-top: 10px;
+    display: flex;
+    align-items: center;
     bottom: 0;
     width: 100%;
     left: 0;
-    height: 20px; /* Height of the footer */
+    height: 30px;
     background: #6cf;
 }
 
@@ -94,4 +124,94 @@ footer {
 
 .other-profile {
     margin-top: 5rem;
+}
+
+.people {
+    /*     display: grid;
+    grid-template-columns: 1.25fr 1.25fr;
+    grid-template-rows: 1.4fr;
+    gap: 0px 0px;
+    grid-template-areas: ". .";
+    grid-auto-rows: auto; */
+}
+
+.recent-users li {
+    /*     background-color: #6002ee;
+    display: inline-block;
+    margin: 0.5rem;
+    border-radius: 6px;
+    padding: 6px;
+    border: 3px solid white;
+
+    overflow-wrap: break-word;
+    white-space: wrap;
+    overflow: hidden;
+    box-shadow: 0px 0px 2px 6px rgba(81, 27, 228, 0.4);
+    height: 100px;
+    width: 200px;
+    align-items: ; */
+}
+.search-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /*  flex-grow: 1; */
+    /*     align-content: center; */
+}
+
+.welcome {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.register input {
+    margin-left: 1rem;
+    display: block;
+}
+
+.welcomebanner {
+    margin-top: 5rem;
+}
+
+.login {
+    margin-top: 2rem;
+}
+
+.logininstead {
+    font-size: small;
+}
+
+.login input {
+    display: block;
+}
+
+.login a {
+    font-size: small;
+}
+
+input {
+    margin-top: 0.5rem;
+}
+
+button {
+    margin: 0.5rem;
+}
+
+.homecontainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.bioeditor {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
 }

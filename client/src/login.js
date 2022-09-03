@@ -33,7 +33,7 @@ export default class LoginForm extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="login">
                 <form onSubmit={this.onFormSubmit}>
                     <input
                         name="email"
