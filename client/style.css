@@ -3,6 +3,7 @@
     text-decoration: none;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
 }
 
 /* header {
@@ -48,6 +49,7 @@
     color: ghostwhite;
     display: inline;
     margin: 0.75rem;
+    white-space: nowrap;
 }
 
 .headerlogo {
@@ -55,11 +57,18 @@
     height: 50px;
 }
 
+.profilePictureWrapper {
+    /*     width: 200px;
+    height: 150px; */
+    cursor: pointer;
+}
+
 .profilePictureWrapperheader img {
     width: 45px;
     height: 45px;
     border-radius: 3px;
     border: 2px solid ghostwhite;
+    cursor: pointer;
 }
 .onlinelist {
     display: flex;
@@ -90,6 +99,14 @@ body {
     margin-bottom: 2rem;
     margin-top: 3rem;
     box-sizing: border-box;
+}
+
+a {
+    color: #212436;
+}
+
+li {
+    margin: 50px;
 }
 
 img {
@@ -126,13 +143,20 @@ footer {
 }
 
 .deleteAccountButton {
-    background-color: red;
+    background-color: rgb(202, 27, 27);
 }
 
 .logout {
     background-color: #494f75;
     color: white;
     border-color: white;
+}
+
+.profile-picture {
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: 400px;
 }
 
 .modal {
@@ -177,7 +201,6 @@ footer {
 }
 
 .register input {
-    margin-left: 1rem;
     display: block;
 }
 
@@ -215,8 +238,18 @@ input {
 button {
     margin: 0.5rem;
     background-color: #494f75;
-    color: white;
-    border-color: white;
+    color: ghostwhite;
+    border-color: ghostwhite;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+textarea {
+    height: 120px;
+    max-height: 120px;
+    width: 100%;
+    max-width: 360px;
+    resize: none;
 }
 
 button:hover {

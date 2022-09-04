@@ -120,14 +120,13 @@ export default class App extends Component {
                     <section className="homecontainer">
                         <Route path="/" exact>
                             <h2>
-                                Welcome to the Void
-                                <br />
+                                Welcome to the Void!
                                 <br />
                             </h2>
                             <h3>
                                 {" "}
                                 {this.state.user.first_name}{" "}
-                                {this.state.user.last_name}!
+                                {this.state.user.last_name}
                             </h3>
                             <div
                                 className="profilePictureWrapper"
