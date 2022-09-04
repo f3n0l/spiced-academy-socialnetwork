@@ -54,8 +54,8 @@ export default function FindPeople() {
 
     return (
         <div className="people">
+            <h2 className="headline">Find People</h2>
             <section className="find-people">
-                <h2>Find People</h2>
                 <section className="recent-users">
                     <h3>Recent Users</h3>
                     <UserList users={recentUsers}></UserList>

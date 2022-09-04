@@ -7,7 +7,7 @@ export default function FriendList({
     showDeny,
 }) {
     return (
-        <ul>
+        <ul className="friendscard">
             {friendships.map((f) => (
                 <li key={f.user_id}>
                     <a

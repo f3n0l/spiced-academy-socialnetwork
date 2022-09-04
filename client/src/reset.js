@@ -24,11 +24,14 @@ export default class ResetPassword extends Component {
                         <input type="email" name="email" placeholder="Email" />
                         <button>Submit</button>
                     </form>
+                    <Link to="/">
+                        <button>Cancel</button>
+                    </Link>
                 </div>
             );
         } else if (step === 2) {
             return (
-                <div>
+                <div className="reset">
                     Enter Reset Code
                     <form
                         autoComplete="false"
@@ -51,14 +54,17 @@ export default class ResetPassword extends Component {
 
                         <button>Submit</button>
                     </form>
+                    <Link to="/">
+                        <button>Cancel</button>
+                    </Link>
                 </div>
             );
         } else if (step === 3) {
             return (
                 <div>
                     <p>Password changed!</p>
-                    <Link to="/">
-                        <button>Home</button>
+                    <Link to="/login">
+                        <button>Login</button>
                     </Link>
                 </div>
             );
@@ -104,16 +110,19 @@ export default class ResetPassword extends Component {
                     return;
                 }
 
-                this.setState({ step: 3 }); //link to login
+                this.setState({ step: 3 });
             });
     }
 
     render() {
         return (
-            <div>
-                <h2> Reset Password</h2>
-                {this.checkStep()}
-                {this.state.error && <p>{this.state.error}</p>}
+            <div className="backgroundall">
+                <div>
+                    <img className="welcomebanner" src="./logobig.jpg"></img>
+                    <h2> Reset Password</h2>
+                    {this.checkStep()}
+                    {this.state.error && <p>{this.state.error}</p>}
+                </div>
             </div>
         );
     }

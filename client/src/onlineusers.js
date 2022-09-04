@@ -21,8 +21,8 @@ export default function OnlineUsers() {
 
     return (
         <div className="onlineUsers">
-            <p>Now online:</p>
-            <ul>
+            <h2>Now online:</h2>
+            <ul className="onlinelist">
                 {onlineUsers.map((onlineUser) => (
                     <li key={onlineUser.id}>
                         <a

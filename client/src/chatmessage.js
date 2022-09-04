@@ -15,7 +15,7 @@ export default function ChatEntry({
     created_at,
 }) {
     return (
-        <div>
+        <div className="chatentry">
             <Link to={`/users/${sender_id}`} className="chatAvatar">
                 <ProfilePicture
                     first_name={first_name}
@@ -26,8 +26,7 @@ export default function ChatEntry({
             <div className="chatContent">
                 <header className="chatInfo">
                     <Link to={`/users/${sender_id}`} className="chatUsername">
-                        {first_name}
-                        {last_name}
+                        {first_name} {last_name}
                     </Link>
                     <p className="chatDate">{formatDate(created_at)}</p>
                 </header>

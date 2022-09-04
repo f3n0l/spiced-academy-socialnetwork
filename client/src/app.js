@@ -68,10 +68,13 @@ export default class App extends Component {
                     <header>
                         <div className="header">
                             <NavLink to="/">
-                                <img className="headerlogo" src="/banner.PNG" />
+                                <img
+                                    className="headerlogo"
+                                    src="/logosmall.jpg"
+                                />
                             </NavLink>
                             <div className="headername">
-                                <p>the worknet</p>
+                                <p>THE VOID</p>
                             </div>
                             <nav className="nav">
                                 <NavLink to="/" className="navlink">
@@ -89,12 +92,12 @@ export default class App extends Component {
                                 <NavLink to="/onlineusers" className="navlink">
                                     Now Online
                                 </NavLink>
-                                <form action="/logout" method="POST">
-                                    <button className="logout">Logout</button>
-                                </form>
                             </nav>{" "}
+                            <form action="/logout" method="POST">
+                                <button className="logout">Logout</button>
+                            </form>
                             <div
-                                className="profilePictureWrapper"
+                                className="profilePictureWrapperheader"
                                 onClick={this.onButtonClick}
                             >
                                 <ProfilePicture
@@ -116,10 +119,16 @@ export default class App extends Component {
                     </header>
                     <section className="homecontainer">
                         <Route path="/" exact>
-                            <p>
-                                Welcome {this.state.user.first_name}{" "}
+                            <h2>
+                                Welcome to the Void
+                                <br />
+                                <br />
+                            </h2>
+                            <h3>
+                                {" "}
+                                {this.state.user.first_name}{" "}
                                 {this.state.user.last_name}!
-                            </p>
+                            </h3>
                             <div
                                 className="profilePictureWrapper"
                                 onClick={this.onButtonClick}
@@ -158,7 +167,7 @@ export default class App extends Component {
                         </Route>
                     </section>
 
-                    <footer> &copy;Yes</footer>
+                    <footer> &copy; THE VOID</footer>
                 </section>
             </BrowserRouter>
         );

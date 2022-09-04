@@ -67,21 +67,26 @@ export default function Friends() {
     const accepted = friendships.filter((f) => f.accepted);
 
     return (
-        <section className="friends">
+        <div>
             <h2>Friends</h2>
-            <section className="incoming-list">
-                <h3>Incoming requests</h3>
-                <FriendList
-                    friendships={incoming}
-                    onClickAccept={onClickAccept}
-                    showDeny
-                    onClickDeny={onClickDeny}
-                />
+            <section className="friends">
+                <section className="incoming-list">
+                    <h3>Incoming requests</h3>
+                    <FriendList
+                        friendships={incoming}
+                        onClickAccept={onClickAccept}
+                        showDeny
+                        onClickDeny={onClickDeny}
+                    />
+                </section>
+                <section className="current-list">
+                    <h3>Current friends</h3>
+                    <FriendList
+                        friendships={accepted}
+                        onClickDeny={onClickDeny}
+                    />
+                </section>
             </section>
-            <section className="current-list">
-                <h3>Current friends</h3>
-                <FriendList friendships={accepted} onClickDeny={onClickDeny} />
-            </section>
-        </section>
+        </div>
     );
 }

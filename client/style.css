@@ -23,7 +23,7 @@
     height: 3.75rem;
     display: flex;
     margin: 0 auto;
-    background-color: #dac1ff;
+    background-color: #95a2f1;
     justify-content: space-evenly;
     flex-direction: row;
     align-items: center;
@@ -38,14 +38,47 @@
     overflow: hidden;
 }
 
+.nav {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.navlink {
+    text-decoration: none;
+    color: ghostwhite;
+    display: inline;
+    margin: 0.75rem;
+}
+
 .headerlogo {
     width: 50px;
     height: 50px;
 }
 
-.profilePicture {
-    width: 50px;
-    height: 50px;
+.profilePictureWrapperheader img {
+    width: 45px;
+    height: 45px;
+    border-radius: 3px;
+    border: 2px solid ghostwhite;
+}
+.onlinelist {
+    display: flex;
+    flex-direction: row;
+}
+
+.onlineUsers img {
+    width: 100px;
+    height: 100px;
+}
+
+.onlineUsers li {
+    width: 200px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 body {
@@ -73,17 +106,12 @@ footer {
     width: 100%;
     left: 0;
     height: 30px;
-    background: #6cf;
-}
-
-.other-profile {
-}
-
-.chat {
+    background-color: #4c547d;
+    color: ghostwhite;
 }
 
 .chatlist {
-    background: #e5e5e5;
+    background: ghostwhite;
     margin: 0;
     padding: 0 10px 10px;
     max-height: 80vh;
@@ -93,12 +121,18 @@ footer {
     max-width: 400px;
 }
 
+.chat {
+    width: 30rem;
+}
+
 .deleteAccountButton {
     background-color: red;
 }
 
 .logout {
-    background-color: rebeccapurple;
+    background-color: #494f75;
+    color: white;
+    border-color: white;
 }
 
 .modal {
@@ -109,7 +143,7 @@ footer {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #dac1ff;
+    background-color: #4c547d;
     margin-top: 500px;
     position: fixed;
     padding: 2rem;
@@ -126,45 +160,20 @@ footer {
     margin-top: 5rem;
 }
 
-.people {
-    /*     display: grid;
-    grid-template-columns: 1.25fr 1.25fr;
-    grid-template-rows: 1.4fr;
-    gap: 0px 0px;
-    grid-template-areas: ". .";
-    grid-auto-rows: auto; */
-}
-
-.recent-users li {
-    /*     background-color: #6002ee;
-    display: inline-block;
-    margin: 0.5rem;
-    border-radius: 6px;
-    padding: 6px;
-    border: 3px solid white;
-
-    overflow-wrap: break-word;
-    white-space: wrap;
-    overflow: hidden;
-    box-shadow: 0px 0px 2px 6px rgba(81, 27, 228, 0.4);
-    height: 100px;
-    width: 200px;
-    align-items: ; */
-}
-.search-results {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /*  flex-grow: 1; */
-    /*     align-content: center; */
-}
-
-.welcome {
+.register {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+.backgroundall {
+    background-color: #95a2f1;
+    inset: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
 }
 
 .register input {
@@ -174,10 +183,17 @@ footer {
 
 .welcomebanner {
     margin-top: 5rem;
+    width: 300px;
 }
 
 .login {
-    margin-top: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    background-color: #95a2f1;
 }
 
 .logininstead {
@@ -198,6 +214,13 @@ input {
 
 button {
     margin: 0.5rem;
+    background-color: #494f75;
+    color: white;
+    border-color: white;
+}
+
+button:hover {
+    background-color: #212436;
 }
 
 .homecontainer {
@@ -208,10 +231,98 @@ button {
     justify-content: center;
 }
 
-.bioeditor {
+.bioeditortext {
     display: flex;
     align-items: center;
     flex-direction: column;
     text-align: center;
     justify-content: center;
+}
+
+.reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.reset input {
+    display: block;
+}
+
+.reset form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.find-people {
+    display: flex;
+    flex-direction: row;
+}
+
+.find-people li {
+    width: 200px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.find-people img {
+    display: block;
+    width: 100px;
+    height: 100px;
+}
+
+.search-results {
+    display: flex;
+
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    top: 0;
+    overflow: scroll;
+    padding: 0 10px 10px;
+    max-height: 80vh;
+    overflow-x: hidden;
+}
+
+.friendscard li {
+    display: flex;
+    margin-top: 2rem;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 150px;
+}
+
+.friendscard img {
+    width: 100px;
+    height: 100px;
+}
+.friendrequestname {
+    display: block;
+}
+
+.friends {
+    display: flex;
+    flex-direction: row;
+    max-height: 80vh;
+}
+
+.chatentry img {
+    width: 50px;
+    height: 50px;
+}
+
+.chatDate {
+    font-size: small;
 }
