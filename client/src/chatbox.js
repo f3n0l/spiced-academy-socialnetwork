@@ -57,15 +57,17 @@ export default function Chat() {
                     </ul>
                 ))}
             </div>
-            <form onSubmit={onSubmit}>
-                <textarea
-                    name="message"
-                    rows={1}
-                    placeholder="Write your message..."
-                    required
-                ></textarea>
-                <button>Send</button>
-            </form>
+            <div className="chatField">
+                <form onSubmit={onSubmit}>
+                    <textarea
+                        name="message"
+                        rows={1}
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+                    <button>Send</button>
+                </form>
+            </div>
         </section>
     );
 }

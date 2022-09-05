@@ -110,6 +110,7 @@ app.post("/api/reset/start", (request, response) => {
                 return;
             }
             response.json({ message: "ok" });
+            console.log(code);
         })
         .catch((error) => {
             console.log("POST /reset/start", error);

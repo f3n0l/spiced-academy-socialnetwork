@@ -19,7 +19,7 @@ export default class ResetPassword extends Component {
         if (step === 1) {
             return (
                 <div>
-                    Send Reset Code
+                    Enter your Email
                     <form key={step} onSubmit={this.handleEmailSubmit}>
                         <input type="email" name="email" placeholder="Email" />
                         <button>Submit</button>
@@ -118,7 +118,7 @@ export default class ResetPassword extends Component {
         return (
             <div className="backgroundall">
                 <div>
-                    <img className="welcomebanner" src="./logobig.jpg"></img>
+                    <img className="welcomebanner" src="./logobig2.jpg"></img>
                     <h2> Reset Password</h2>
                     {this.checkStep()}
                     {this.state.error && <p>{this.state.error}</p>}

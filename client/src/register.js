@@ -37,8 +37,8 @@ export default class RegisterForm extends Component {
         return (
             <div className="backgroundall">
                 <div className="register">
-                    <img className="welcomebanner" src="./logobig.jpg"></img>
-                    <h2>Join the madness!</h2>
+                    <img className="welcomebanner" src="./logobig2.jpg"></img>
+                    <h2>Join the Nullity!</h2>
                     <form onSubmit={this.onFormSubmit}>
                         <input
                             name="first_name"

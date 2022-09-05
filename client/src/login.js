@@ -35,7 +35,7 @@ export default class LoginForm extends Component {
         return (
             <div className="backgroundall">
                 <div className="login">
-                    <img className="welcomebanner" src="./logobig.jpg"></img>
+                    <img className="welcomebanner" src="./logobig2.jpg"></img>
                     <p>Already a Member?</p>
                     <form onSubmit={this.onFormSubmit}>
                         <input
